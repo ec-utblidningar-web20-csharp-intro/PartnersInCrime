@@ -9,8 +9,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Wireframes-img\" />
-  </ItemGroup>
-
 </Project>
