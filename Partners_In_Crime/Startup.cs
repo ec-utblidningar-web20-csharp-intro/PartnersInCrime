@@ -33,7 +33,7 @@ namespace Partners_In_Crime
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -45,6 +45,9 @@ namespace Partners_In_Crime
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            DatabaseInitializer.Initialize(context);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
