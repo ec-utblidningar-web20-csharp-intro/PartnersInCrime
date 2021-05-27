@@ -13,9 +13,5 @@ namespace Partners_In_Crime.Data
             : base(options)
         {
         }
-        
-        public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<Hobbies> Hobbies { get; set; }
-        public DbSet<Interests> Interests { get; set; }
     }
 }
