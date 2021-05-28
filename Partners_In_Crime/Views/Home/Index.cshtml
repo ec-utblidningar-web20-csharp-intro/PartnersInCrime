@@ -1,8 +1,121 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    /*Css*/
+    .filterbtn {
+                  position: absolute;
+                  top: 0px;
+                  left: 10px;
+                  background-color: #04AA6D;
+                  color: white;
+                  padding: 16px;
+                  font-size: 16px;
+                  border: none;
+                  cursor: pointer;
+                }
+    .filterbtn2 {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+    .filterbtn:hover, .filterbtn:focus, filterbtn2:hover, .filterbtn2:focus {
+                  background-color: #3e8e41;
+                }
+    .slider-textbox{
+                max-width: 25px;
+            }
+    .filter {
+        position: relative;
+        display: inline-block;
+        color: white;
+    }
+    .filter-content{
+                  display: none;
+                  position: absolute;
+                  top: 70px;
+                  background-color: #333;
+                  min-width: 240px;
+                  padding: 20px;
+                  overflow: auto;
+                  border: 1px solid #ddd;
+                  z-index: 1;
+                }
+    .filter-content2, .filter-content3{
+                  display: none;
+                  position: absolute;
+                  top: 300px;
+                  background-color: #333;
+                  width: 260px;
+                  padding: 10px;
+                  overflow: auto;
+                  border: 1px solid #ddd;
+                  z-index: 1;
+            }
+    .filter a:hover {
+        background-color: #ddd;
+    }
+    .show {display: block;}
+</style>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="filter">
+    <button onclick="filterFunction()" class="filterbtn">Filter</button>
+    <div id="myFilter" class="filter-content">
+        <p>Age</p>
+        <input type="range" min="18" max="99" value="18" onchange="updateTextInput(this.value);">
+        <input type="text" id="textInput1" class="slider-textbox" value="18">
+        <p>Distance</p>
+        <input type="range" min="1" max="3" value="1" onchange="update2TextInput(this.value);">
+        <input type="text" id="textInput2" class="slider-textbox" value="1">
+        <button onclick="filter2Function()" class="filterbtn2">Interests</button>
+        <button onclick="filter3Function()" class="filterbtn2">Hobbies</button>
+    </div>
+    <div id="myFilter2" class="filter-content2">
+        <input type="checkbox" id="music" name="interest" value="music">
+        <label for="music">Music</label>
+        <input type="checkbox" id="coding" name="interest" value="coding">
+        <label for="coding">Coding</label>
+    </div>
+    <div id="myFilter3" class="filter-content3">
+        <input type="checkbox" id="bergsklättring" name="hobbies" value="bergsklättring">
+        <label for="bergsklättring">bergsklättring</label>
+    </div>
 </div>
+
+<script>
+    /*JS*/
+    function filterFunction() {
+        var x = document.getElementById("myFilter2");
+        var y = document.getElementById("myFilter3");
+        document.getElementById("myFilter").classList.toggle("show");
+        if (window.getComputedStyle(x).display === "block") {
+            document.getElementById("myFilter2").classList.toggle("show");
+        }
+        if (window.getComputedStyle(y).display === "block") {
+            document.getElementById("myFilter3").classList.toggle("show");
+        }
+    }
+    function filter2Function() {
+        var y = document.getElementById("myFilter3");
+        document.getElementById("myFilter2").classList.toggle("show");
+        if (window.getComputedStyle(y).display === "block") {
+            document.getElementById("myFilter3").classList.toggle("show");
+        }
+    }
+    function filter3Function() {
+        var x = document.getElementById("myFilter2");
+        document.getElementById("myFilter3").classList.toggle("show");
+        if (window.getComputedStyle(x).display === "block") {
+            document.getElementById("myFilter2").classList.toggle("show");
+        }
+    }
+    function updateTextInput(val) {
+        document.getElementById('textInput1').value = val;
+    }
+    function update2TextInput(val) {
+        document.getElementById('textInput2').value = val;
+    }
+</script>
