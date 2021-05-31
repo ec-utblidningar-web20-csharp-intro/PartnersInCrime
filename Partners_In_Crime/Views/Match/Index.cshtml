@@ -1,30 +1,6 @@
 ﻿@model MatchViewModel
-@{
+<h1>@Model.AppUser.FirstName @Model.AppUser.LastName 's Matches</h1>
 
-}
-<h1>MATCH OSV</h1>
-<ul>
-    @foreach (var group in Model.MatchedUsers)
-    {
-        <h1>@group.Key</h1>
-        foreach (var user in group)
-        {
-            <li>
-                @user.FirstName
-            </li>
-        }
-    }
-    </ul>
-<h1>lol nopp</h1>
-<ul>
-    @foreach (var group in Model.NotMatchedUsers)
-    {
-        <h1>@group.Key</h1>
-        foreach (var user in group)
-        {
-            <li>
-                @user.FirstName
-            </li>
-        }
-    }
-</ul>
+@await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)
+@await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)
+@await Html.PartialAsync("_TopMatchesInterest", Model.InterestMatch)

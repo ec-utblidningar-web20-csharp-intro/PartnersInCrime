@@ -19,11 +19,23 @@ namespace Partners_In_Crime.Controllers
 
         public IActionResult Index()
         {
-            var allUsers = _context.AppUsers.Include(e=>e.Interests).Include(e=>e.Hobbies);
+            var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies);
             var currentUser = allUsers.First();
+
+            var viewModel = new MatchViewModel(currentUser);
+
+            // General Matches
             var generalMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Both);
-            var viewModel = new MatchViewModel(currentUser, generalMatches);
-        
+            viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
+
+            // Hobby Matches
+            var hobbyMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Hobbies);
+            viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
+
+            // Interest Matches
+            var interestMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Interests);
+            viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
+
             return View(viewModel);
         }
 
