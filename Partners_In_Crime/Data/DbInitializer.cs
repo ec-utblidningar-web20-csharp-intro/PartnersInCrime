@@ -84,6 +84,36 @@ namespace Partners_In_Crime.Data
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Wilma", LastName = "Ipsen", Email = "wipsen@gmail.com", Country = "Spain", City = "Madrid",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 23, Description = "Hej! Ge mig en vän :(", FirstName = "Lars", LastName = "Larsson", Email = "larsa@gmail.com", Country = "Spain", City = "Madrid",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 50, Description = "Tjena! Letar nya vänner.", FirstName = "Gösta", LastName = "Bark", Email = "gbark@gmail.com", Country = "Sweden", City = "Stockholm",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 34, Description = "Bli vän med mig, jag är bäst!", FirstName = "Leo", LastName = "Igelström", Email = "Ligel@gmail.com", Country = "New Zeeland", City = "Auckland",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 18, Description = "Please be my friend..", FirstName = "Maja", LastName = "Lindström", Email = "majjal@gmail.com", Country = "Netherlands", City = "Amsterdam",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 19, Description = "Ser fram emot nya vänner!", FirstName = "William", LastName = "Karlsson", Email = "Wkarlsson@gmail.com", Country = "Sweden", City = "Jönköping",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 27, Description = "Skriv till mig people!", FirstName = "Caroline", LastName = "Ebbesen", Email = "ceebbesen@gmail.com", Country = "Sweden", City = "Örebro",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 32, Description = "Jag är sjukt trevlig.", FirstName = "Leonardo", LastName = "Fabricius", Email = "lfabricius@gmail.com", Country = "Italy", City = "Rome",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 10, Description = "Letar efter lika tråkiga vänner som jag.", FirstName = "Astrid", LastName = "Gemmeltoft", Email = "agemmel@gmail.com", Country = "United Kingdom", City = "Liverpool",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 45, Description = "Like me for who I am.", FirstName = "Nora", LastName = "Hasselrot", Email = "nhasselrot@gmail.com", Country = "Sweden", City = "Trelleborg",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+
+                new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Klas", LastName = "Ipsen", Email = "kipsen@gmail.com", Country = "Italy", City = "Venice",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }}
             };
 
