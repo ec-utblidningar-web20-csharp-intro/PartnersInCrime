@@ -1,6 +1,7 @@
 ﻿using Partners_In_Crime.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,19 @@ namespace Partners_In_Crime.Data
 {
     public class DbInitializer
     {
+        public static byte[] ReadFile(string sPath)
+        {
+            byte[] data = null;
+
+            FileInfo fInfo = new FileInfo(sPath);
+            long numBytes = fInfo.Length;
+            FileStream fStream = new FileStream(sPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fStream);
+
+            data = br.ReadBytes((int)numBytes);
+
+            return data;
+        }
 
         public static void Initialize(ApplicationDbContext context)
         {
@@ -19,8 +33,23 @@ namespace Partners_In_Crime.Data
             }
         }
 
+
         public static void Seed(ApplicationDbContext context)
         {
+            var Imgs = new List<UserImg>
+            {
+              new UserImg { Content = ReadFile("Wireframes-img/UserImg.jpg") }
+
+            };
+
+            foreach (var img in Imgs)
+            {
+                context.UserImgs.Add(img);
+            }
+
+            context.SaveChanges();
+
+
             var interests = new List<Interest>
             {
                 new Interest {Name = "Reading"}, new Interest {Name = "Movies"}, new Interest {Name = "Psychology"}, new Interest {Name = "Music"},
@@ -55,10 +84,14 @@ namespace Partners_In_Crime.Data
 
             Random rnd = new Random();
 
+
+
+
             var testUsers = new List<AppUser>()
             {
+
                 new AppUser {Age = 23, Description = "Hej! Ge mig en vän :(", FirstName = "Fake", LastName = "Fakesson", Email = "fakeuser@gmail.com", Country = "Sweden", City = "Gothenburg",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImgs= new List<UserImg>() {Imgs[rnd.Next(Imgs.Count)]} ,Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 50, Description = "Tjena! Letar nya vänner.", FirstName = "Alice", LastName = "Aagesdatter", Email = "aaagerdatter@gmail.com", Country = "Sweden", City = "Stockholm",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
@@ -67,7 +100,7 @@ namespace Partners_In_Crime.Data
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 18, Description = "Please be my friend..", FirstName = "Maja", LastName = "Cajander", Email = "majacaj@gmail.com", Country = "Sweden", City = "Trelleborg",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImgs= new List<UserImg>() {Imgs[rnd.Next(Imgs.Count)]}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 19, Description = "Ser fram emot nya vänner!", FirstName = "William", LastName = "D'Aubert", Email = "wdaubert@gmail.com", Country = "Sweden", City = "Arvika",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
