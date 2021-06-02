@@ -46,8 +46,6 @@ namespace Partners_In_Crime
                 app.UseHsts();
             }
 
-            DbInitializer.Initialize(context);
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
