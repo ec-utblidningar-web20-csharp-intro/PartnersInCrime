@@ -1,13 +1,13 @@
-﻿using Partners_In_Crime.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Partners_In_Crime.Data
 {
-    public static class DbInitializer
+    public class DbInitializer
     {
+
         public static void Initialize(ApplicationDbContext context)
         {
             context.Database.EnsureDeleted();
@@ -126,5 +126,6 @@ namespace Partners_In_Crime.Data
 
             context.SaveChanges();
         }
+
     }
 }
