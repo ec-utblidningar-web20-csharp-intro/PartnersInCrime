@@ -1,0 +1,8 @@
+﻿@model MatchViewModel
+<h1>@Model.AppUser.FirstName @Model.AppUser.LastName 's Matches</h1>
+
+@await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)
+@await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)
+@await Html.PartialAsync("_TopMatchesInterest", Model.InterestMatch)
+
+<p>MEGA ÄNDRING</p>
