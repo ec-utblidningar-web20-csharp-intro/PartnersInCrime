@@ -113,6 +113,8 @@ namespace Partners_In_Crime.Data
                 new AppUser {Age = 45, Description = "Like me for who I am.", FirstName = "Nora", LastName = "Hasselrot", Email = "nhasselrot@gmail.com", Country = "Sweden", City = "Trelleborg",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
+                new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Linus", LastName = "Ipsen", Email = "kipsen@gmail.com", Country = "Italy", City = "Venice",
+                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
                 new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Klas", LastName = "Ipsen", Email = "kipsen@gmail.com", Country = "Italy", City = "Venice",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }}
             };
