@@ -80,7 +80,7 @@ namespace Partners_In_Crime.Data
 
                 new AppUser {Age = 10, Description = "Letar efter lika tråkiga vänner som jag.", FirstName = "Astrid", LastName = "Gemmeltoft", Email = "agemmel@gmail.com", Country = "United Kingdom", City = "Liverpool",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
-                 
+
                 new AppUser {Age = 45, Description = "Like me for who I am.", FirstName = "Lucas", LastName = "Hasselrot", Email = "lhasselrot@gmail.com", Country = "Sweden", City = "Malmö",
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
@@ -123,6 +123,23 @@ namespace Partners_In_Crime.Data
             foreach (var testUser in testUsers)
             {
                 context.AppUsers.Add(testUser);
+            }
+
+            for (int i = 0; i < 50010; i++)
+            {
+                context.Add(
+                new AppUser
+                {
+                    Age = 18,
+                    Description = "Please be my friend..",
+                    FirstName = "Maja",
+                    LastName = "Lindström",
+                    Email = "majjal@gmail.com",
+                    Country = "Netherlands",
+                    City = "Amsterdam",
+                    Interests = new List<Interest>() { interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] },
+                    Hobbies = new List<Hobby>() { hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }
+                });
             }
 
             context.SaveChanges();

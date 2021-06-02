@@ -20,6 +20,13 @@ namespace Partners_In_Crime.Controllers
         public IActionResult Index()
         {
             var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies);
+
+            //TEST KOD
+            var inte = _context.Interests.AsEnumerable();
+            var hobb = _context.Hobbies.AsEnumerable();
+            var result= GetSearchedUsers(inte.Take(1), hobb.Take(1), allUsers);
+            //TEST KOD SLUT
+
             var currentUser = allUsers.First();
 
             var viewModel = new MatchViewModel(currentUser);
@@ -43,6 +50,7 @@ namespace Partners_In_Crime.Controllers
         public IEnumerable<IGrouping<int, AppUser>> Match(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
         {
             if(matchOptions == MatchOptions.Interests)
+
                 return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
 
             if(matchOptions==MatchOptions.Hobbies)
@@ -56,6 +64,11 @@ namespace Partners_In_Crime.Controllers
             Interests,
             Hobbies,
             Both
+        }
+
+        public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<Interest> interests, IEnumerable<Hobby> hobbies, IEnumerable<AppUser> users)
+        {
+            return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
         }
     }
 
