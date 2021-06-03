@@ -125,23 +125,6 @@ namespace Partners_In_Crime.Data
                 context.AppUsers.Add(testUser);
             }
 
-            for (int i = 0; i < 50010; i++)
-            {
-                context.Add(
-                new AppUser
-                {
-                    Age = 18,
-                    Description = "Please be my friend..",
-                    FirstName = "Maja",
-                    LastName = "Lindström",
-                    Email = "majjal@gmail.com",
-                    Country = "Netherlands",
-                    City = "Amsterdam",
-                    Interests = new List<Interest>() { interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] },
-                    Hobbies = new List<Hobby>() { hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }
-                });
-            }
-
             context.SaveChanges();
         }
 
