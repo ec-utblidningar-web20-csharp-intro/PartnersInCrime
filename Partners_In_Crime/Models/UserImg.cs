@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace Partners_In_Crime.Models
 {
-    public class UserImg:AppUser
+    public class UserImg
     {
-        
+        public int Id { get; set; }
         public byte[] Content { get; set; }
-
-        
+        public List<AppUser> Users { get; set; }
     }
 }

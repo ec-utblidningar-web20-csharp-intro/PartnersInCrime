@@ -18,6 +18,6 @@ namespace Partners_In_Crime.Models
 
         public List<Interest> Interests { get; set; }
         public List<Hobby> Hobbies { get; set; }
-        
+        public UserImg UserImg { get; set; }
     }
 }
