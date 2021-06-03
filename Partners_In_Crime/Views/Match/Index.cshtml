@@ -1,7 +1,7 @@
 ﻿@model MatchViewModel
 <h1>@Model.AppUser.FirstName @Model.AppUser.LastName  's Matches</h1>
 <td>
-    <img src
+    <img src="Models/@Model.User  "
 </td>
 @await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)
 @await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)
