@@ -20,7 +20,7 @@ namespace Partners_In_Crime.Controllers
         public IActionResult Index()
         {
             var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies);
-            var currentUser = allUsers.First();
+            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             var viewModel = new MatchViewModel(currentUser);
 
