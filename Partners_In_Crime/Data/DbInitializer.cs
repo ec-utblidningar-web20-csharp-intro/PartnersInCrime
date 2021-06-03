@@ -1,6 +1,7 @@
 ﻿using Partners_In_Crime.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,19 @@ namespace Partners_In_Crime.Data
 {
     public class DbInitializer
     {
+        public static byte[] ReadFile(string sPath)
+        {
+            byte[] data = null;
+
+            FileInfo fInfo = new FileInfo(sPath);
+            long numBytes = fInfo.Length;
+            FileStream fStream = new FileStream(sPath, FileMode.Open, FileAccess.Read);
+            BinaryReader br = new BinaryReader(fStream);
+
+            data = br.ReadBytes((int)numBytes);
+
+            return data;
+        }
 
         public static void Initialize(ApplicationDbContext context)
         {
@@ -57,67 +71,68 @@ namespace Partners_In_Crime.Data
 
             var testUsers = new List<AppUser>()
             {
+
                 new AppUser {Age = 23, Description = "Hej! Ge mig en vän :(", FirstName = "Fake", LastName = "Fakesson", Email = "fakeuser@gmail.com", Country = "Sweden", City = "Gothenburg",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"} ,Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 50, Description = "Tjena! Letar nya vänner.", FirstName = "Alice", LastName = "Aagesdatter", Email = "aaagerdatter@gmail.com", Country = "Sweden", City = "Stockholm",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 34, Description = "Bli vän med mig, jag är bäst!", FirstName = "Noah", LastName = "Baark", Email = "noahb@gmail.com", Country = "Sweden", City = "Mora",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 18, Description = "Please be my friend..", FirstName = "Maja", LastName = "Cajander", Email = "majacaj@gmail.com", Country = "Sweden", City = "Trelleborg",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 19, Description = "Ser fram emot nya vänner!", FirstName = "William", LastName = "D'Aubert", Email = "wdaubert@gmail.com", Country = "Sweden", City = "Arvika",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 27, Description = "Skriv till mig people!", FirstName = "Elsa", LastName = "Ebbesen", Email = "eebbesen@gmail.com", Country = "Netherlands", City = "Amsterdam",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 32, Description = "Jag är sjukt trevlig.", FirstName = "Hugo", LastName = "Fabricius", Email = "hfabricius@gmail.com", Country = "New Zeeland", City = "Queenstown",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 10, Description = "Letar efter lika tråkiga vänner som jag.", FirstName = "Astrid", LastName = "Gemmeltoft", Email = "agemmel@gmail.com", Country = "United Kingdom", City = "Liverpool",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
                  
                 new AppUser {Age = 45, Description = "Like me for who I am.", FirstName = "Lucas", LastName = "Hasselrot", Email = "lhasselrot@gmail.com", Country = "Sweden", City = "Malmö",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Wilma", LastName = "Ipsen", Email = "wipsen@gmail.com", Country = "Spain", City = "Madrid",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 23, Description = "Hej! Ge mig en vän :(", FirstName = "Lars", LastName = "Larsson", Email = "larsa@gmail.com", Country = "Spain", City = "Madrid",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 50, Description = "Tjena! Letar nya vänner.", FirstName = "Gösta", LastName = "Bark", Email = "gbark@gmail.com", Country = "Sweden", City = "Stockholm",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 34, Description = "Bli vän med mig, jag är bäst!", FirstName = "Leo", LastName = "Igelström", Email = "Ligel@gmail.com", Country = "New Zeeland", City = "Auckland",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 18, Description = "Please be my friend..", FirstName = "Maja", LastName = "Lindström", Email = "majjal@gmail.com", Country = "Netherlands", City = "Amsterdam",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 19, Description = "Ser fram emot nya vänner!", FirstName = "William", LastName = "Karlsson", Email = "Wkarlsson@gmail.com", Country = "Sweden", City = "Jönköping",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 27, Description = "Skriv till mig people!", FirstName = "Caroline", LastName = "Ebbesen", Email = "ceebbesen@gmail.com", Country = "Sweden", City = "Örebro",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 32, Description = "Jag är sjukt trevlig.", FirstName = "Leonardo", LastName = "Fabricius", Email = "lfabricius@gmail.com", Country = "Italy", City = "Rome",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 10, Description = "Letar efter lika tråkiga vänner som jag.", FirstName = "Astrid", LastName = "Gemmeltoft", Email = "agemmel@gmail.com", Country = "United Kingdom", City = "Liverpool",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 45, Description = "Like me for who I am.", FirstName = "Nora", LastName = "Hasselrot", Email = "nhasselrot@gmail.com", Country = "Sweden", City = "Trelleborg",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
 
                 new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Linus", LastName = "Ipsen", Email = "kipsen@gmail.com", Country = "Italy", City = "Venice",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }},
                 new AppUser {Age = 62, Description = "Letar efter en skön typ.", FirstName = "Klas", LastName = "Ipsen", Email = "kipsen@gmail.com", Country = "Italy", City = "Venice",
-                            Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }}
+                            UserImg= new UserImg {Url = "/img/ProfilePic.jpg"}, Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }}
             };
 
             foreach (var testUser in testUsers)
