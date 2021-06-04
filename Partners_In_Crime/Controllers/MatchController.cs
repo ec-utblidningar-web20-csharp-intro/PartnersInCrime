@@ -49,6 +49,8 @@ namespace Partners_In_Crime.Controllers
             return View(viewModel);
         }
 
+
+        // TODO: Not working properly. Doesn't return the correct amount of users. Reason: IGrouping.
         // Matches current user with other users on interests, hobbies or both. Default: Interests.
         public IEnumerable<IGrouping<int, AppUser>> Match(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
         {
@@ -175,6 +177,7 @@ namespace Partners_In_Crime.Controllers
             Both
         }
 
+        // For the search/filter thingy
         public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<Interest> interests, IEnumerable<Hobby> hobbies, IEnumerable<AppUser> users)
         {
             return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
