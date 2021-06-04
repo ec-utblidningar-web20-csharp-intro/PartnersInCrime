@@ -4,6 +4,10 @@
 <ul>
     @foreach (var user in Model.MatchedUsers)
     {
-        <h1>@user.FirstName @user.LastName hade @user.AmountOfMatchingParameters matchande parametrar</h1>
+        <li>
+            <h5>@user.FirstName @user.LastName</h5>
+            @user.MatchingParameters matchande parametrar
+        </li>
+        <br />
     }
 </ul>

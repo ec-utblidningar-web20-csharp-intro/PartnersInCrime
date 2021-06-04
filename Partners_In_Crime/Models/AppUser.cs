@@ -18,7 +18,10 @@ namespace Partners_In_Crime.Models
         public string City { get; set; }
         public byte[] Image { get; set; }
 
-        public int AmountOfMatchingParameters { get; set; }
+        public int MatchingInterests { get; set; }
+        public int MatchingHobbies { get; set; }
+        public int MatchingParameters { get; set; }
+        public int MatchingLocations { get; set; }
 
         public List<Interest> Interests { get; set; }
         public List<Hobby> Hobbies { get; set; }

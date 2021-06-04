@@ -31,74 +31,118 @@ namespace Partners_In_Crime.Controllers
 
             var viewModel = new MatchViewModel(currentUser);
 
-            //// General Matches
-            //var generalMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Both);
-            //viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
+            // General Matches
+            var generalMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.General);
+            viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
 
-            //// Hobby Matches
-            //var hobbyMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Hobbies);
-            //viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
+            // Hobby Matches
+            var hobbyMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Hobbies);
+            viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
 
-            //// Interest Matches
-            //var interestMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Interests);
-            //viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
+            // Interest Matches
+            var interestMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Interests);
+            viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
 
-            var bellaMatchUsers = BellaMatching(currentUser, allUsers.Skip(1), 10, MatchOptions.Both);
-            viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, bellaMatchUsers);
+            // Location Matches
+            var locationMatches = Match(currentUser, allUsers.Skip(1), 20, MatchOptions.Location);
+            viewModel.LocationMatch = new LocationMatchViewModel(currentUser, locationMatches);
 
             return View(viewModel);
         }
 
+        public IEnumerable<AppUser> Match(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.General)
+        {
+            // Interest top matches
+            if (matchOptions == MatchOptions.Interests)
+            {
+                var interestMatches = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).AsEnumerable();
+
+                foreach (var user in interestMatches)
+                {
+                    var matchingInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                    user.MatchingInterests = matchingInterests.Count();
+                }
+
+                return interestMatches.OrderByDescending(m => m.MatchingInterests).Take(returnCount);
+            }
+
+            // Hobby top matches
+            if (matchOptions == MatchOptions.Hobbies)
+            {
+                var hobbyMatches = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i))).AsEnumerable();
+
+                foreach (var user in hobbyMatches)
+                {
+                    var matchingHobbies = _context.Hobbies.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                    user.MatchingHobbies = matchingHobbies.Count();
+                }
+
+                return hobbyMatches.OrderByDescending(u => u.MatchingHobbies).Take(returnCount);
+            }
+
+            // Location top matches
+            if (matchOptions == MatchOptions.Location)
+            {
+                var generalMatches = GeneralMatch(currentUser, allUsers, returnCount);
+                
+                foreach (var user in generalMatches)
+                {
+                    if (user.City == currentUser.City)
+                    {
+                        user.MatchingLocations ++;
+                    }
+
+                    if (user.Country == currentUser.Country) 
+                    {
+                        user.MatchingLocations ++;
+                    }
+                }
+                return generalMatches.OrderByDescending(u => u.MatchingLocations).ThenByDescending(u => u.MatchingParameters);
+            }
+
+            // General Top Matches
+            return GeneralMatch(currentUser, allUsers, returnCount);
+        }
 
         // TODO: Not working properly. Doesn't return the correct amount of users. Reason: IGrouping.
         // Matches current user with other users on interests, hobbies or both. Default: Interests.
-        public IEnumerable<IGrouping<int, AppUser>> Match(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
+        //public IEnumerable<IGrouping<int, AppUser>> Match(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
+        //{
+        //    if (matchOptions == MatchOptions.Interests)
+
+        //        return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
+
+        //    if (matchOptions == MatchOptions.Hobbies)
+        //        return allUsers.GroupBy(e => e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
+
+        //    return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count() + e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
+        //}
+
+        public IEnumerable<AppUser> GeneralMatch(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount)
         {
-            if (matchOptions == MatchOptions.Interests)
-
-                return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
-
-            if (matchOptions == MatchOptions.Hobbies)
-                return allUsers.GroupBy(e => e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
-
-            return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count() + e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
-        }
-
-        public IEnumerable<AppUser> BellaMatching(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
-        {
-            if (matchOptions == MatchOptions.Interests)
-            {
-                var matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).ToList();
-                foreach (var user in matchedUsers)
-                {
-                    var allInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
-                    user.AmountOfMatchingParameters = allInterests.Count();
-                }
-                matchedUsers.OrderByDescending(m => m.AmountOfMatchingParameters).Take(returnCount);
-                return matchedUsers;
-            }
-            if (matchOptions == MatchOptions.Hobbies)
-            {
-                var matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i))).ToList();
-                foreach (var user in matchedUsers)
-                {
-                    var allInterests = _context.Hobbies.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
-                    user.AmountOfMatchingParameters = allInterests.Count();
-                }
-
-                var result = matchedUsers.OrderBy(u => u.AmountOfMatchingParameters);
-
-                return result;
-            }
-
-            // General match (hobbies and interests)
-            var generalMatchUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).ToList();
+            var matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).ToList();
             var additionalUsers = allUsers.Where(u => currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).ToList();
 
+            RemoveDuplicates(matchedUsers, additionalUsers);
+
+            matchedUsers.AddRange(additionalUsers);
+
+            foreach (var user in matchedUsers)
+            {
+                var allInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                var allHobbies = _context.Hobbies.Where(h => h.AppUsers.Contains(user) && h.AppUsers.Contains(currentUser));
+                user.MatchingParameters = allInterests.Count() + allHobbies.Count();
+            }
+
+            return matchedUsers.OrderByDescending(u => u.MatchingParameters).Take(returnCount);
+        }
+
+        public void RemoveDuplicates(IEnumerable<AppUser> matchedUsers, List<AppUser> additionalUsers)
+        {
             var duplicates = new List<AppUser>();
 
             // Find duplicates in general/additional users
-            foreach (var user in generalMatchUsers)
+            foreach (var user in matchedUsers)
             {
                 foreach (var additionalUser in additionalUsers)
                 {
@@ -117,20 +161,9 @@ namespace Partners_In_Crime.Controllers
                     additionalUsers.Remove(duplicate);
                 }
             }
-
-            generalMatchUsers.AddRange(additionalUsers);
-
-            foreach (var user in generalMatchUsers)
-            {
-                var allInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
-                var allHobbies = _context.Hobbies.Where(h => h.AppUsers.Contains(user) && h.AppUsers.Contains(currentUser));                
-                user.AmountOfMatchingParameters = allInterests.Count() + allHobbies.Count();
-            }
-            
-            return generalMatchUsers.OrderByDescending(u => u.AmountOfMatchingParameters).Take(returnCount);
         }
 
-        public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Both)
+        public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.General)
         {
             if (matchOptions == MatchOptions.Interests)
             {
@@ -174,7 +207,8 @@ namespace Partners_In_Crime.Controllers
         {
             Interests,
             Hobbies,
-            Both
+            Location,
+            General
         }
 
         // For the search/filter thingy
