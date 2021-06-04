@@ -31,19 +31,20 @@ namespace Partners_In_Crime.Controllers
 
             var viewModel = new MatchViewModel(currentUser);
 
-            // General Matches
-            var generalMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Both);
-            viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
+            //// General Matches
+            //var generalMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Both);
+            //viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
 
-            // Hobby Matches
-            var hobbyMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Hobbies);
-            viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
+            //// Hobby Matches
+            //var hobbyMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Hobbies);
+            //viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
 
-            // Interest Matches
-            var interestMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Interests);
-            viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
+            //// Interest Matches
+            //var interestMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Interests);
+            //viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
 
-            var bellaMatchUsers = BellaMatching(currentUser, allUsers.Skip(1), 5);
+            var bellaMatchUsers = BellaMatching(currentUser, allUsers.Skip(1), 10, MatchOptions.Both);
+            viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, bellaMatchUsers);
 
             return View(viewModel);
         }
@@ -82,12 +83,49 @@ namespace Partners_In_Crime.Controllers
                     var allInterests = _context.Hobbies.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
                     user.AmountOfMatchingParameters = allInterests.Count();
                 }
-                matchedUsers.OrderByDescending(m => m.AmountOfMatchingParameters).Take(returnCount);
-                return matchedUsers;
+
+                var result = matchedUsers.OrderBy(u => u.AmountOfMatchingParameters);
+
+                return result;
+            }
+
+            // General match (hobbies and interests)
+            var generalMatchUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).ToList();
+            var additionalUsers = allUsers.Where(u => currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).ToList();
+
+            var duplicates = new List<AppUser>();
+
+            // Find duplicates in general/additional users
+            foreach (var user in generalMatchUsers)
+            {
+                foreach (var additionalUser in additionalUsers)
+                {
+                    if (user == additionalUser)
+                    {
+                        duplicates.Add(additionalUser);
+                    }
+                }
+            }
+
+            // Remove duplicates before adding to generalMatchUsers
+            foreach (var duplicate in duplicates)
+            {
+                if (additionalUsers.Contains(duplicate))
+                {
+                    additionalUsers.Remove(duplicate);
+                }
+            }
+
+            generalMatchUsers.AddRange(additionalUsers);
+
+            foreach (var user in generalMatchUsers)
+            {
+                var allInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                var allHobbies = _context.Hobbies.Where(h => h.AppUsers.Contains(user) && h.AppUsers.Contains(currentUser));                
+                user.AmountOfMatchingParameters = allInterests.Count() + allHobbies.Count();
             }
             
-            // detta ska va general match sen
-            return new List<AppUser>();
+            return generalMatchUsers.OrderByDescending(u => u.AmountOfMatchingParameters).Take(returnCount);
         }
 
         public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Both)

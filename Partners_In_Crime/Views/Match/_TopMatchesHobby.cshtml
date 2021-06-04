@@ -1,13 +1,13 @@
 ﻿@model HobbyMatchViewModel
 
-<h3>HOBBY MATCHES</h3>
+@*<h3>HOBBY MATCHES</h3>
 <ul>
-    @foreach (var group in Model.MatchedUsers)
+    @foreach (var user in Model.MatchedUsers)
     {
-        <h1>@group.Key</h1>
+        <h1>@user</h1>
         foreach (var user in group)
         {
             <li>@user.FirstName  @user.LastName</li>
         }
     }
-</ul>
+</ul>*@

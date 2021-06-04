@@ -18,7 +18,6 @@ namespace Partners_In_Crime.Models
         public string City { get; set; }
         public byte[] Image { get; set; }
 
-        [NotMapped]
         public int AmountOfMatchingParameters { get; set; }
 
         public List<Interest> Interests { get; set; }

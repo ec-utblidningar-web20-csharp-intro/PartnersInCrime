@@ -120,6 +120,16 @@ namespace Partners_In_Crime.Data
                             Interests = new List<Interest>() {interests[rnd.Next(interests.Count)], interests[rnd.Next(interests.Count)] }, Hobbies = new List<Hobby>() {hobbies[rnd.Next(interests.Count)], hobbies[rnd.Next(interests.Count)] }}
             };
 
+            // adding some extra random interests/hobbies to testUsers
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    testUsers[i].Hobbies.Add(hobbies[rnd.Next(hobbies.Count)]);
+                    testUsers[1 + 8].Interests.Add(interests[rnd.Next(interests.Count)]);
+                }
+            }
+
             foreach (var testUser in testUsers)
             {
                 context.AppUsers.Add(testUser);

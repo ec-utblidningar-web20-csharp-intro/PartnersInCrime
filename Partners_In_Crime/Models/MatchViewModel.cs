@@ -24,15 +24,13 @@ namespace Partners_In_Crime.Models
 
     public class GeneralMatchViewModel
     {
-        public GeneralMatchViewModel(AppUser appUser, IEnumerable<IGrouping<int, AppUser>> matchedUsers)
+        public GeneralMatchViewModel(AppUser appUser, IEnumerable<AppUser> matchedUsers)
         {
             AppUser = appUser;
-            MatchedUsers = matchedUsers.Where(m => m.Key != 0);
-            NotMatchedUsers = matchedUsers.Where(m => m.Key == 0);
+            MatchedUsers = matchedUsers;
         }
         public AppUser AppUser { get; set; }
-        public IEnumerable<IGrouping<int, AppUser>> MatchedUsers { get; set; }
-        public IEnumerable<IGrouping<int, AppUser>> NotMatchedUsers { get; set; }
+        public IEnumerable<AppUser> MatchedUsers { get; set; }
     }
 
     public class HobbyMatchViewModel
