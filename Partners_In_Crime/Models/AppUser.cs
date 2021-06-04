@@ -16,7 +16,6 @@ namespace Partners_In_Crime.Models
         public string Email { get; set; }
         public string Country { get; set; } 
         public string City { get; set; }
-        public byte[] Image { get; set; }
 
         public int MatchingInterests { get; set; }
         public int MatchingHobbies { get; set; }
@@ -25,5 +24,6 @@ namespace Partners_In_Crime.Models
 
         public List<Interest> Interests { get; set; }
         public List<Hobby> Hobbies { get; set; }
+        public UserImg UserImg { get; set; }
     }
 }

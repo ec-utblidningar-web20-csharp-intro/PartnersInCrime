@@ -21,6 +21,12 @@ namespace Partners_In_Crime.Models
         public HobbyMatchViewModel HobbyMatch { get; set; }
         public InterestMatchViewModel InterestMatch { get; set; }
         public LocationMatchViewModel LocationMatch { get; set; }
+        public SearchResultViewModel SearchResult { get; set; }
+    }
+
+    public class SearchResultViewModel
+    {
+        public IEnumerable<AppUser> Users { get; set; }
     }
 
     public class GeneralMatchViewModel

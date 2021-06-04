@@ -27,7 +27,7 @@ namespace Partners_In_Crime.Controllers
             var result= GetSearchedUsers(inte.Take(1), hobb.Take(1), allUsers);
             //TEST KOD SLUT
 
-            var currentUser = allUsers.First();
+            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             var viewModel = new MatchViewModel(currentUser);
 
@@ -43,9 +43,16 @@ namespace Partners_In_Crime.Controllers
             var interestMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Interests);
             viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
 
+
             // Location Matches
             var locationMatches = Match(currentUser, allUsers.Skip(1), 20, MatchOptions.Location);
             viewModel.LocationMatch = new LocationMatchViewModel(currentUser, locationMatches);
+
+            // Gör en sökning med IT och Cooking som hobby/interest parametrar
+            var interests = _context.Interests.Where(i => i.Name == "IT").ToList();
+            var hobbies = _context.Hobbies.Where(h => h.Name == "Cooking").ToList();
+            var searchResults = GetSearchedUsers(allUsers, interests, hobbies);
+            viewModel.SearchResult = new SearchResultViewModel { Users = searchResults };
 
             return View(viewModel);
         }
@@ -216,6 +223,69 @@ namespace Partners_In_Crime.Controllers
         {
             return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
         }
-    }
 
+        public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<AppUser> users, IEnumerable<Interest> interests , IEnumerable<Hobby> hobbies)
+        {
+            if (!interests.Contains(null) && hobbies.Contains(null))
+                return users.Where(u => interests.All(i => u.Interests.Contains(i)));
+
+            if (interests.Contains(null) && !hobbies.Contains(null))
+                return users.Where(u => hobbies.All(h => u.Hobbies.Contains(h)));
+
+            if (!interests.Contains(null) && !hobbies.Contains(null)) 
+                return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
+
+            return new List<AppUser>();
+        }
+
+        // Alternativ GetSearchedUsers metod
+        //public List<AppUser> FindUsers(List<Hobby> hobbies = null, List<Interest> interests = null)
+        //{
+        //    var result = new List<AppUser>();
+
+        //    var users = _context.AppUsers.Include(a => a.Hobbies).Include(a => a.Interests).ToList();
+
+        //    var noMatchHobbies = new List<Hobby>();
+        //    var matchedHobbies = new List<Hobby>();
+
+        //    var noMatchInterests = new List<Interest>();
+        //    var matchedInterests = new List<Interest>();
+
+        //    foreach (var user in users)
+        //    {
+        //        if (hobbies != null)
+        //        {
+        //            noMatchHobbies = user.Hobbies.Except(hobbies).ToList();
+        //            matchedHobbies = user.Hobbies.Except(noMatchHobbies).ToList();
+
+        //            if (interests != null)
+        //            {
+        //                noMatchInterests = user.Interests.Except(interests).ToList();
+        //                matchedInterests = user.Interests.Except(noMatchInterests).ToList();
+
+        //                if (matchedHobbies.Count == hobbies.Count && matchedInterests.Count == interests.Count)
+        //                {
+        //                    result.Add(user);
+        //                }
+        //            }
+        //        }
+        //        if (interests != null)
+        //        {
+        //            noMatchInterests = user.Interests.Except(interests).ToList();
+        //            matchedInterests = user.Interests.Except(noMatchInterests).ToList();
+
+        //            if (matchedInterests.Count == interests.Count)
+        //            {
+        //                result.Add(user);
+        //            }
+        //        }
+        //        if (matchedInterests.Count == interests.Count)
+        //        {
+        //            result.Add(user);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+    }
 }
