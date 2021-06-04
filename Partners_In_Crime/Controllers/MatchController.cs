@@ -43,6 +43,8 @@ namespace Partners_In_Crime.Controllers
             var interestMatches = Match(currentUser, allUsers.Skip(1), 5, MatchOptions.Interests);
             viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
 
+            var bellaMatchUsers = BellaMatching(currentUser, allUsers.Skip(1), 5);
+
             return View(viewModel);
         }
 
@@ -57,6 +59,35 @@ namespace Partners_In_Crime.Controllers
                 return allUsers.GroupBy(e => e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
 
             return allUsers.GroupBy(e => e.Interests.Where(m => currentUser.Interests.Contains(m)).Count() + e.Hobbies.Where(m => currentUser.Hobbies.Contains(m)).Count()).OrderByDescending(g => g.Key).Take(returnCount);
+        }
+
+        public IEnumerable<AppUser> BellaMatching(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Interests)
+        {
+            if (matchOptions == MatchOptions.Interests)
+            {
+                var matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).ToList();
+                foreach (var user in matchedUsers)
+                {
+                    var allInterests = _context.Interests.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                    user.AmountOfMatchingParameters = allInterests.Count();
+                }
+                matchedUsers.OrderByDescending(m => m.AmountOfMatchingParameters).Take(returnCount);
+                return matchedUsers;
+            }
+            if (matchOptions == MatchOptions.Hobbies)
+            {
+                var matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i))).ToList();
+                foreach (var user in matchedUsers)
+                {
+                    var allInterests = _context.Hobbies.Where(i => i.AppUsers.Contains(user) && i.AppUsers.Contains(currentUser));
+                    user.AmountOfMatchingParameters = allInterests.Count();
+                }
+                matchedUsers.OrderByDescending(m => m.AmountOfMatchingParameters).Take(returnCount);
+                return matchedUsers;
+            }
+            
+            // detta ska va general match sen
+            return new List<AppUser>();
         }
 
         public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.Both)
