@@ -1,0 +1,23 @@
+﻿@model LocationMatchViewModel
+
+<h3>LOCATION MATCHES</h3>
+<ul>
+    @foreach (var user in Model.MatchedUsers)
+    {
+        <li>
+            <h5>@user.FirstName @user.LastName</h5>
+            @{
+                if (user.MatchingLocations == 2)
+                {
+                    <p style="color:lightseagreen; font-weight: 700;">** City-Match **</p>
+                }
+                if (user.MatchingLocations >= 1)
+                {
+                    <p style="color:cornflowerblue; font-weight: 700; ">** Country-Match **</p>
+                }
+            }
+            @user.MatchingParameters matchande parametrar
+        </li>
+        <br />
+    }
+</ul>
