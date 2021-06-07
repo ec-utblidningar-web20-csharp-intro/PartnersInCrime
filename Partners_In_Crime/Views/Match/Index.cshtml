@@ -1,4 +1,3 @@
-
 ﻿@model MatchViewModel
 <style>
     .matchMainComtainer {
@@ -16,15 +15,4 @@
 
     <p>MEGA ÄNDRING</p>
 </div>
-=======
-@model MatchViewModel
-<td>
-<img src="@Model.AppUser.UserImg.Url" />
-</td>
-<h1>@Model.AppUser.FirstName @Model.AppUser.LastName 's Matches</h1><br />
-
-@await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)<br />
-@await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)<br />
-@await Html.PartialAsync("_TopMatchesInterest", Model.InterestMatch)<br />
-@await Html.PartialAsync("_TopMatchesLocation", Model.LocationMatch) <br />
 
