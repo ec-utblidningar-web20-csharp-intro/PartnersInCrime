@@ -20,14 +20,13 @@ namespace Partners_In_Crime.Controllers
         public IActionResult Index()
         {
             var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg);
+            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             //TEST KOD
             var inte = _context.Interests.AsEnumerable();
             var hobb = _context.Hobbies.AsEnumerable();
-            var result= GetSearchedUsers(inte.Take(1), hobb.Take(1), allUsers);
+            var result= GetSearchedUsers(currentUser, allUsers, inte.Take(1), hobb.Take(1), 0, 18, 100);
             //TEST KOD SLUT
-
-            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             var viewModel = new MatchViewModel(currentUser);
 
@@ -48,11 +47,7 @@ namespace Partners_In_Crime.Controllers
             var locationMatches = Match(currentUser, allUsers.Skip(1), 20, MatchOptions.Location);
             viewModel.LocationMatch = new LocationMatchViewModel(currentUser, locationMatches);
 
-            // Gör en sökning med IT och Cooking som hobby/interest parametrar
-            var interests = _context.Interests.Where(i => i.Name == "IT").ToList();
-            var hobbies = _context.Hobbies.Where(h => h.Name == "Cooking").ToList();
-            var searchResults = GetSearchedUsers(currentUser, allUsers, interests, hobbies, 0, 18, 100);
-            viewModel.SearchResult = new SearchResultViewModel { Users = searchResults };
+            viewModel.SearchResult = new SearchResultViewModel { Users = result };
 
             return View(viewModel);
         }
