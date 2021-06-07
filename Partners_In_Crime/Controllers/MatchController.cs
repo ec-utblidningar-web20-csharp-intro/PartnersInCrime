@@ -51,7 +51,7 @@ namespace Partners_In_Crime.Controllers
             // Gör en sökning med IT och Cooking som hobby/interest parametrar
             var interests = _context.Interests.Where(i => i.Name == "IT").ToList();
             var hobbies = _context.Hobbies.Where(h => h.Name == "Cooking").ToList();
-            var searchResults = GetSearchedUsers(allUsers, interests, hobbies);
+            var searchResults = GetSearchedUsers(currentUser, allUsers, interests, hobbies, 0, 18, 100);
             viewModel.SearchResult = new SearchResultViewModel { Users = searchResults };
 
             return View(viewModel);
@@ -179,11 +179,6 @@ namespace Partners_In_Crime.Controllers
         }
 
         // For the search/filter thingy
-        public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<Interest> interests, IEnumerable<Hobby> hobbies, IEnumerable<AppUser> users)
-        {
-            return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
-        }
-
         public IEnumerable<AppUser> GetSearchedUsers(AppUser currentUser, IEnumerable<AppUser> users, IEnumerable<Interest> interests , IEnumerable<Hobby> hobbies, int locationFilter, int minAge, int maxAge)
         {
             if (!interests.Contains(null) && hobbies.Contains(null))
