@@ -170,45 +170,7 @@ namespace Partners_In_Crime.Controllers
             }
         }
 
-        public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.General)
-        {
-            if (matchOptions == MatchOptions.Interests)
-            {
-
-        //        var matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) && u.City==currentUser.City).Take(returnCount);
-
-        //        if(matchedUsers.Count() < returnCount)
-        //        {
-        //            matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) && u.Country == currentUser.Country).Take(returnCount - matchedUsers.Count());
-        //            if(matchedUsers.Count()< returnCount)
-        //            {
-        //                matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).Take(returnCount - matchedUsers.Count());
-        //            }
-        //            return matchedUsers;
-        //        }
-        //        return matchedUsers;
-        //    }
-
-        //    if (matchOptions == MatchOptions.Hobbies)
-        //    {
-        //        var matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i)) && u.City == currentUser.City).Take(returnCount);
-
-        //        if (matchedUsers.Count() < returnCount)
-        //        {
-        //            matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i)) && u.Country == currentUser.Country).Take(returnCount - matchedUsers.Count());
-        //            if (matchedUsers.Count() < returnCount)
-        //            {
-        //                matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i))).Take(returnCount - matchedUsers.Count());
-        //            }
-        //            return matchedUsers;
-        //        }
-        //        return matchedUsers;
-        //    }
-        //        return allUsers.Where(u => currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).Take(returnCount);
-
-        //    return allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) || currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).Take(returnCount);
-        //}
-
+        
        
         public enum MatchOptions
         {
