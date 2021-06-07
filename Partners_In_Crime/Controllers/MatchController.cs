@@ -19,7 +19,7 @@ namespace Partners_In_Crime.Controllers
 
         public IActionResult Index()
         {
-            var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies);
+            var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg);
 
             //TEST KOD
             var inte = _context.Interests.AsEnumerable();
@@ -170,8 +170,6 @@ namespace Partners_In_Crime.Controllers
             }
         }
 
-        
-       
         public enum MatchOptions
         {
             Interests,
