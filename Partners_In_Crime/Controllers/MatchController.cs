@@ -20,14 +20,13 @@ namespace Partners_In_Crime.Controllers
         public IActionResult Index()
         {
             var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg);
+            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             //TEST KOD
             var inte = _context.Interests.AsEnumerable();
             var hobb = _context.Hobbies.AsEnumerable();
-            var result= GetSearchedUsers(inte.Take(1), hobb.Take(1), allUsers);
+            var result= GetSearchedUsers(currentUser, allUsers, inte.Take(1), hobb.Take(1), 0, 18, 100);
             //TEST KOD SLUT
-
-            var currentUser = allUsers.Include(u => u.UserImg).First();
 
             var viewModel = new MatchViewModel(currentUser);
 
@@ -48,11 +47,7 @@ namespace Partners_In_Crime.Controllers
             var locationMatches = Match(currentUser, allUsers.Skip(1), 20, MatchOptions.Location);
             viewModel.LocationMatch = new LocationMatchViewModel(currentUser, locationMatches);
 
-            // Gör en sökning med IT och Cooking som hobby/interest parametrar
-            var interests = _context.Interests.Where(i => i.Name == "IT").ToList();
-            var hobbies = _context.Hobbies.Where(h => h.Name == "Cooking").ToList();
-            var searchResults = GetSearchedUsers(allUsers, interests, hobbies);
-            viewModel.SearchResult = new SearchResultViewModel { Users = searchResults };
+            viewModel.SearchResult = new SearchResultViewModel { Users = result };
 
             return View(viewModel);
         }
@@ -170,46 +165,6 @@ namespace Partners_In_Crime.Controllers
             }
         }
 
-        public IEnumerable<AppUser> LidlMatchning(AppUser currentUser, IEnumerable<AppUser> allUsers, int returnCount, MatchOptions matchOptions = MatchOptions.General)
-        {
-            if (matchOptions == MatchOptions.Interests)
-            {
-
-                var matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) && u.City==currentUser.City).Take(returnCount);
-
-                if(matchedUsers.Count() < returnCount)
-                {
-                    matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) && u.Country == currentUser.Country).Take(returnCount - matchedUsers.Count());
-                    if(matchedUsers.Count()< returnCount)
-                    {
-                        matchedUsers = allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i))).Take(returnCount - matchedUsers.Count());
-                    }
-                    return matchedUsers;
-                }
-                return matchedUsers;
-            }
-
-            if (matchOptions == MatchOptions.Hobbies)
-            {
-                var matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i)) && u.City == currentUser.City).Take(returnCount);
-
-                if (matchedUsers.Count() < returnCount)
-                {
-                    matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i)) && u.Country == currentUser.Country).Take(returnCount - matchedUsers.Count());
-                    if (matchedUsers.Count() < returnCount)
-                    {
-                        matchedUsers = allUsers.Where(u => currentUser.Hobbies.Any(i => u.Hobbies.Contains(i))).Take(returnCount - matchedUsers.Count());
-                    }
-                    return matchedUsers;
-                }
-                return matchedUsers;
-            }
-                return allUsers.Where(u => currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).Take(returnCount);
-
-            //return allUsers.Where(u => currentUser.Interests.Any(i => u.Interests.Contains(i)) || currentUser.Hobbies.Any(h => u.Hobbies.Contains(h))).Take(returnCount);
-        }
-
-       
         public enum MatchOptions
         {
             Interests,
@@ -219,12 +174,7 @@ namespace Partners_In_Crime.Controllers
         }
 
         // For the search/filter thingy
-        public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<Interest> interests, IEnumerable<Hobby> hobbies, IEnumerable<AppUser> users)
-        {
-            return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
-        }
-
-        public IEnumerable<AppUser> GetSearchedUsers(IEnumerable<AppUser> users, IEnumerable<Interest> interests , IEnumerable<Hobby> hobbies)
+        public IEnumerable<AppUser> GetSearchedUsers(AppUser currentUser, IEnumerable<AppUser> users, IEnumerable<Interest> interests , IEnumerable<Hobby> hobbies, int locationFilter, int minAge, int maxAge)
         {
             if (!interests.Contains(null) && hobbies.Contains(null))
                 return users.Where(u => interests.All(i => u.Interests.Contains(i)));
@@ -232,11 +182,41 @@ namespace Partners_In_Crime.Controllers
             if (interests.Contains(null) && !hobbies.Contains(null))
                 return users.Where(u => hobbies.All(h => u.Hobbies.Contains(h)));
 
-            if (!interests.Contains(null) && !hobbies.Contains(null)) 
+            if (!interests.Contains(null) && !hobbies.Contains(null))
                 return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
 
-            return new List<AppUser>();
+            return users;
         }
+
+        //public IEnumerable<AppUser> InterestHobbyFilter(IEnumerable<AppUser> users, IEnumerable<Interest> interests, IEnumerable<Hobby> hobbies)
+        //{
+        //    if (!interests.Contains(null) && hobbies.Contains(null))
+        //        return users.Where(u => interests.All(i => u.Interests.Contains(i)));
+
+        //    if (interests.Contains(null) && !hobbies.Contains(null))
+        //        return users.Where(u => hobbies.All(h => u.Hobbies.Contains(h)));
+
+        //    if (!interests.Contains(null) && !hobbies.Contains(null))
+        //        return users.Where(u => interests.All(i => u.Interests.Contains(i)) && hobbies.All(h => u.Hobbies.Contains(h)));
+
+        //    return users;
+        //}
+
+        //public IEnumerable<AppUser> LocationFilter(AppUser currentUser, IEnumerable<AppUser> users, int locationFilter)
+        //{
+        //    if (locationFilter == 1)
+        //        return users.Where(u => u.Country == currentUser.Country);
+
+        //    if (locationFilter == 2)
+        //        return users.Where(u => u.City == currentUser.City);
+
+        //    return users.ToList();
+        //}
+
+        //public IEnumerable<AppUser> AgeFilter(IEnumerable<AppUser> users, int minAge, int maxAge)
+        //{
+        //    return users.Where(u => u.Age >= minAge && u.Age <= maxAge).ToList();
+        //}
 
         // Alternativ GetSearchedUsers metod
         //public List<AppUser> FindUsers(List<Hobby> hobbies = null, List<Interest> interests = null)
