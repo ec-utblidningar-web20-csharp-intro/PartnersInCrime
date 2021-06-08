@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Partners_In_Crime.Data;
 using Partners_In_Crime.Models;
@@ -12,32 +13,40 @@ namespace Partners_In_Crime.Controllers
     public class MatchController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public MatchController(ApplicationDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+
+        public MatchController(ApplicationDbContext context, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
-            var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg);
-            var currentUser = allUsers.Include(u => u.UserImg).First();
+            var userId = _userManager.GetUserId(User);
+
+            var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg).Where(u => u.Id != userId);
+            
+            var currentUser = _context.AppUsers.Include(u => u.Interests).Include(u => u.Hobbies).Where(u => u.Id == userId).FirstOrDefault();
 
             var viewModel = new MatchViewModel(currentUser);
 
             // General Matches
-            var generalMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.General);
+            var generalMatches = Match(currentUser, allUsers, 10, MatchOptions.General);
             viewModel.GeneralMatch = new GeneralMatchViewModel(currentUser, generalMatches);
 
             // Hobby Matches
-            var hobbyMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Hobbies);
+            var hobbyMatches = Match(currentUser, allUsers, 10, MatchOptions.Hobbies);
             viewModel.HobbyMatch = new HobbyMatchViewModel(currentUser, hobbyMatches);
 
             // Interest Matches
-            var interestMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Interests);
+            var interestMatches = Match(currentUser, allUsers, 10, MatchOptions.Interests);
             viewModel.InterestMatch = new InterestMatchViewModel(currentUser, interestMatches);
 
             // Location Matches
-            var locationMatches = Match(currentUser, allUsers.Skip(1), 10, MatchOptions.Location);
+            var locationMatches = Match(currentUser, allUsers, 10, MatchOptions.Location);
             viewModel.LocationMatch = new LocationMatchViewModel(currentUser, locationMatches);
 
             //TEST KOD SÖKNING (alla som gillar Beer & Football, och är mellan 18 och 100 år) inget locationfilter på, den är 0

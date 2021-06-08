@@ -1,4 +1,5 @@
-﻿using Partners_In_Crime.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Partners_In_Crime.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,18 +10,18 @@ namespace Partners_In_Crime.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(ApplicationDbContext context)
+        public static void Initialize(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             if (!context.AppUsers.Any())
             {
-                Seed(context);
+                Seed(context, userManager).Wait();
                 Lidl.LidlSeed(context).Wait();
             }
         }
 
-        public static void Seed(ApplicationDbContext context)
+        public static async Task Seed(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             var interests = new List<Interest>
             {
@@ -52,7 +53,21 @@ namespace Partners_In_Crime.Data
                 context.Hobbies.Add(hobby);
             }
 
-            context.SaveChanges();
+            var testUser = new AppUser
+            {
+                FirstName = "Test",
+                LastName = "Testsson",
+                UserName = "test@test.com",
+                Email = "test@test.com",
+                City = "Jinghai",
+                Country = "China",
+                Age = 23,
+                Description = "HEJ",
+                Hobbies = new List<Hobby> { new Hobby { Name = hobbies[1].Name }, new Hobby { Name = hobbies[2].Name }, new Hobby { Name = hobbies[3].Name } },
+                Interests = new List<Interest> { new Interest { Name = interests[1].Name }, new Interest { Name = interests[2].Name }, new Interest { Name = interests[3].Name } }
+            };
+
+            await userManager.CreateAsync(testUser, "Test1234%");
 
             context.SaveChanges();
         }

@@ -39,7 +39,7 @@ namespace Partners_In_Crime
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -52,7 +52,7 @@ namespace Partners_In_Crime
                 app.UseHsts();
             }
 
-            DbInitializer.Initialize(context);
+            DbInitializer.Initialize(context, userManager);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
