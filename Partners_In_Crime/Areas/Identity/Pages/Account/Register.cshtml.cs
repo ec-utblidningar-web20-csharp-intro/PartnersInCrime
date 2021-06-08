@@ -62,7 +62,7 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Text)]
             [Display(Name = "Age")]
             public string Age { get; set; }
 
@@ -90,7 +90,7 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
+                var user = new AppUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, Age = Input.Age };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

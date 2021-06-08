@@ -10,7 +10,7 @@ namespace Partners_In_Crime.Models
     public class AppUser:IdentityUser
     {
         
-        public int Age { get; set; }
+        public string Age { get; set; }
         public string Description { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
