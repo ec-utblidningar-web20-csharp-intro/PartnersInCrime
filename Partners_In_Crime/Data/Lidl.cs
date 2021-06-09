@@ -22,8 +22,13 @@ namespace Partners_In_Crime.Data
             var users = JsonConvert.DeserializeObject<IEnumerable<AppUser>>(File.ReadAllText(mockUserDataFilePath));
             List<Interest> interests = await context.Interests.ToListAsync();
             List<Hobby> hobbies = await context.Hobbies.ToListAsync();
-            foreach(var user in users)
+
+            var img = context.UserImgs.Find(1);
+
+            foreach (var user in users)
             {
+                user.UserImg = img;
+
                 user.Interests = new List<Interest>();
                 user.Hobbies = new List<Hobby>();
                 var interestsCount = omegaRandom.Next(1, 10);
