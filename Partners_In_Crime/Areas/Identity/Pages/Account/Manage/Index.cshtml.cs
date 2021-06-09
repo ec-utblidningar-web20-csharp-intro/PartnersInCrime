@@ -50,16 +50,11 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "City")]
             public string City { get; set; }
-
-            //[Phone]
-            //[Display(Name = "Phone number")]
-            //public string PhoneNumber { get; set; }
         }
 
         private async Task LoadAsync(AppUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             var age = user.Age;
             var description = user.Description;
@@ -72,7 +67,6 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                //PhoneNumber = phoneNumber,
                 Age = age,
                 Description = description,
                 FirstName = firstName,
@@ -108,8 +102,6 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
             var age = user.Age;
             var description = user.Description;
             var firstName = user.FirstName;
@@ -119,7 +111,6 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
             if (Input.Age != age || Input.Description != description || Input.FirstName != firstName || Input.LastName != lastName || Input.Country != country || Input.City != city)
             {
-                //var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 user.Age = Input.Age;
                 user.Description = Input.Description;
                 user.FirstName = Input.FirstName;
@@ -128,12 +119,6 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
                 user.City = Input.City;
 
                 await _userManager.UpdateAsync(user);
-
-                //if (!setPhoneResult.Succeeded)
-                //{
-                //    StatusMessage = "Unexpected error when trying to set phone number.";
-                //    return RedirectToPage();
-                //}
             }
 
             await _signInManager.RefreshSignInAsync(user);
