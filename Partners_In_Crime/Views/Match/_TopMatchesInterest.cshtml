@@ -9,7 +9,7 @@
         {
             <li>AddAtSignHEREuser.FirstName  AddAtSignHEREuser.LastName</li>
         }
-=======-->
+=======
 <ul>
     @foreach (var user in Model.MatchedUsers)
     {
@@ -20,7 +20,7 @@
         <br />
 
     }
-</ul>
+</ul>-->
 <style>
     #myCarousel {
         color: white;
@@ -36,7 +36,8 @@
         background: black;
     }
 </style>
-@{List<AppUser> listan = Model.MatchedUsers.ToList(); }
+
+
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -46,33 +47,33 @@
         <div class="carousel-item active">
 
             <div id="userCards" class="card">
-                <img src="@@listan[0].UserImg.Url" class="card-img-top" alt="...">
+                <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[0].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[1].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[2].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[3].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="" class="card-img-top" alt="...">
+                <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[4].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
 
@@ -82,31 +83,31 @@
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[5].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[6].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[7].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[8].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h3>@listan[9].FirstName</h3>
+                    <h3>UserName</h3>
                 </div>
             </div>
 
