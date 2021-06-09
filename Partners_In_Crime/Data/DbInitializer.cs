@@ -53,6 +53,10 @@ namespace Partners_In_Crime.Data
                 context.Hobbies.Add(hobby);
             }
 
+            var img = new UserImg { Url = "/img/ProfilePic.jpg" };
+            context.UserImgs.Add(img);
+            context.SaveChanges();
+
             var testUser = new AppUser
             {
                 FirstName = "Test",
@@ -63,6 +67,7 @@ namespace Partners_In_Crime.Data
                 Country = "China",
                 Age = 23,
                 Description = "HEJ",
+                UserImg = img,
                 Hobbies = new List<Hobby> { new Hobby { Name = hobbies[1].Name }, new Hobby { Name = hobbies[2].Name }, new Hobby { Name = hobbies[3].Name } },
                 Interests = new List<Interest> { new Interest { Name = interests[1].Name }, new Interest { Name = interests[2].Name }, new Interest { Name = interests[3].Name } }
             };
