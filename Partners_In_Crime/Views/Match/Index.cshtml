@@ -8,7 +8,6 @@
 
 <div class="matchMainComtainer">
     <h1>@Model.AppUser.FirstName @Model.AppUser.LastName 's Matches</h1>
-    <img src="@Model.AppUser.UserImg.Url" />
 
     @await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)
     @await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)

@@ -1,26 +1,7 @@
 ﻿@model LocationMatchViewModel
 
 <h3>LOCATION MATCHES</h3>
-<ul>
-    @foreach (var user in Model.MatchedUsers)
-    {
-        <li>
-            <h5>@user.FirstName @user.LastName</h5>
-            @{
-                if (user.MatchingLocations == 2)
-                {
-                    <p style="color:lightseagreen; font-weight: 700;">** City-Match **</p>
-                }
-                if (user.MatchingLocations >= 1)
-                {
-                    <p style="color:cornflowerblue; font-weight: 700; ">** Country-Match **</p>
-                }
-            }
-            @user.MatchingParameters matchande parametrar
-        </li>
-        <br />
-    }
-</ul>
+
 <style>
     #myCarousel {
         color: white;
@@ -46,31 +27,31 @@
         <div class="carousel-item active">
 
             <div id="userCards" class="card">
-                <img src="@@listan[0].UserImg.Url" class="card-img-top" alt="...">
+                <img src="@listan[0].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[0].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[1].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[1].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[2].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[2].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[3].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[3].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="" class="card-img-top" alt="...">
+                <img src="@listan[4].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[4].FirstName</h3>
                 </div>
@@ -80,31 +61,31 @@
         <div class="carousel-item">
 
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[5].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[5].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[6].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[6].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[7].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[7].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[8].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[8].FirstName</h3>
                 </div>
             </div>
             <div id="userCards" class="card">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="@listan[9].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[9].FirstName</h3>
                 </div>
