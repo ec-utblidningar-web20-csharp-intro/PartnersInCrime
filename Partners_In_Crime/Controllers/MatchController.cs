@@ -133,6 +133,7 @@ namespace Partners_In_Crime.Controllers
             return matchedUsers.OrderByDescending(u => u.MatchingParameters).Take(returnCount);
         }
 
+        // Ta bort dubletter
         public void RemoveDuplicates(IEnumerable<AppUser> matchedUsers, List<AppUser> additionalUsers)
         {
             var duplicates = new List<AppUser>();
