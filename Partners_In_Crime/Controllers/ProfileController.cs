@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Partners_In_Crime.Data;
 using Partners_In_Crime.Models;
 using System;
@@ -21,12 +22,11 @@ namespace Partners_In_Crime.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(string id)
         {
-            var userId = _userManager.GetUserId(User);
-            var currentUser = _context.AppUsers.Find(userId);
+            var targetUser = _context.AppUsers.Include(u => u.UserImg).Where(u => u.Id == id).FirstOrDefault();
 
-            var viewModel = new ProfileViewModel { AppUser = currentUser};
+            var viewModel = new ProfileViewModel { AppUser = targetUser };
             return View(viewModel);
         }
     }
