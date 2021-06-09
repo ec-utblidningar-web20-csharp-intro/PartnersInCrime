@@ -1,5 +1,6 @@
 ﻿@model InterestMatchViewModel
 <h3>INTEREST MATCHES</h3>
+
 <!--<ul>
     AddAtSignHEREforeach (var group in Model.MatchedUsers)
     {
@@ -8,6 +9,16 @@
         {
             <li>AddAtSignHEREuser.FirstName  AddAtSignHEREuser.LastName</li>
         }
+=======
+<ul>
+    @foreach (var user in Model.MatchedUsers)
+    {
+        <li>
+            <h5>@user.FirstName @user.LastName</h5>
+            @user.MatchingInterests matchande intressen
+        </li>
+        <br />
+
     }
 </ul>-->
 <style>

@@ -12,6 +12,35 @@
     @await Html.PartialAsync("_TopMatchesGeneral", Model.GeneralMatch)
     @await Html.PartialAsync("_TopMatchesHobby", Model.HobbyMatch)
     @await Html.PartialAsync("_TopMatchesInterest", Model.InterestMatch)
-
-    <p>MEGA ÄNDRING</p>
+    @await Html.PartialAsync("_TopMatchesLocation", Model.LocationMatch)
 </div>
+
+<div>
+    <h1>SEARCH RESULTS</h1>
+    <ul>
+        @{
+            if (!Model.SearchResult.Users.Any())
+            {
+                <h3 style="color: red;">NO RESULTS FOUND</h3>
+            }
+            foreach (var user in Model.SearchResult.Users)
+            {
+                <li>
+                    <h3>@user.FirstName @user.LastName, @user.Age</h3>
+                    <h5>@user.City, @user.Country</h5>
+                    @{
+                        if (user.MatchingLocations == 2)
+                        {
+                            <p style="color:lightseagreen; font-weight: 700;">** City-Match **</p>
+                        }
+                        if (user.MatchingLocations >= 1)
+                        {
+                            <p style="color:cornflowerblue; font-weight: 700; ">** Country-Match **</p>
+                        }
+                    }
+                </li>
+            }
+        }
+    </ul>
+</div>
+

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -59,12 +63,19 @@
             <div class="topnav">
                 <a asp-controller="Home" asp-action="Index" class="active">Partner's In Crime</a>
                 <div class="btn-group">
-                    <a href="#login" class="btn btn-outline-primary">Login</a>
-                    <a href="#register" class="btn btn-outline-secondary">Register</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a href="/Identity/Account/Logout" class="btn btn-outline-primary">Logout</a>
+                        <a href="#profile">Profile</a>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-outline-primary">Login</a>
+                        <a href="/Identity/Account/Register" class="btn btn-outline-secondary">Register</a>
+                    }
                 </div>
                 <div id="myLinks">
                     <a asp-controller="Match" asp-action="Index">Match</a>
-                    <a href="#profile">Profile</a>
                     <a href="#chat">Chat</a>
                     <a href="#about">About</a>
                 </div>
@@ -81,9 +92,6 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Partners_In_Crime - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
     </footer>
     <script>
         /*JS*/
