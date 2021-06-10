@@ -1,13 +1,81 @@
 ﻿@model ProfileViewModel
 
 @{ 
-    var targetUser = Model.AppUser;
+    var user = Model.AppUser;
 }
-<div>
-    <h1>@Model.AppUser.FirstName @Model.AppUser.LastName</h1>
-    <img style="width: 30%;"src="@targetUser.UserImg.Url" class="card-img-top" alt="...">
-    <p>About me: @Model.AppUser.Description</p>
-    <p>Country: @Model.AppUser.Country</p>
-    <p>City: @Model.AppUser.City</p>
-    <p>Email: @Model.AppUser.Email</p>
+
+<h1 style="margin: 5% 0 5% 0;">@user.UserName's Profile</h1>
+    <div class="container h-auto">
+        <div class="row">
+            <div class="col-4">
+                <img src="@user.UserImg.Url" style="border-radius: 180px 180px; max-width: 100%; height: auto;" alt="...">
+            </div>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="thead-dark">About Me</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Name</dt>
+                            <dd class="col-sm-9">@user.FirstName @user.LastName</dd>
+
+                            <dt class="col-sm-3">Age</dt>
+                            <dd class="col-sm-9">@user.Age</dd>
+
+                            <dt class="col-sm-3">Country</dt>
+                            <dd class="col-sm-9">@user.Country</dd>
+
+                            <dt class="col-sm-3">City</dt>
+                            <dd class="col-sm-9">@user.City</dd>
+
+                            <dt class="col-sm-3">Email</dt>
+                            <dd class="col-sm-9">@user.Email</dd>
+
+                            <dt class="col-sm-3">Description</dt>
+                            <dd class="col-sm-9">@user.Description</dd>
+
+                            <dt class="col-sm-3">Contact</dt>
+                            <dd class="col-sm-9"><button type="button" style="max-width: 200px" class="btn btn-secondary">Add Friend</button></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+    <div class="card-group" style="margin: 3% 15% 15% 15%">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="thead-dark">Hobbies</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    @{
+
+                        foreach (var hobby in user.Hobbies)
+                        {
+                            <li class="card-text">@hobby.Name</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="thead-dark">Interests</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    @{
+
+                        foreach (var interest in user.Interests)
+                        {
+                            <li class="card-text">@interest.Name</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
