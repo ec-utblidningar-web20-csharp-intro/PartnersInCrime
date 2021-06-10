@@ -28,7 +28,7 @@ namespace Partners_In_Crime.Data
             foreach (var user in users)
             {
                 user.UserImg = img;
-
+                user.UserName = user.Email;
                 user.Interests = new List<Interest>();
                 user.Hobbies = new List<Hobby>();
                 var interestsCount = omegaRandom.Next(1, 10);
