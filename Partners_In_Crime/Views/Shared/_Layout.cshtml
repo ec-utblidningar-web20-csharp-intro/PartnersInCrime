@@ -61,12 +61,12 @@
     <header>
         <nav>
             <div class="topnav">
-                <a asp-controller="Home" asp-action="Index" class="active">Partner's In Crime</a>
+                <a asp-controller="Match" asp-action="Index" class="active">Partner's In Crime</a>
                 <div class="btn-group">
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <a href="/Identity/Account/Logout" class="btn btn-outline-primary">Logout</a>
-                        <a href="#profile">Profile</a>
+                        <a href="/identity/account/manage/index">Profile</a>
                     }
                     else
                     {

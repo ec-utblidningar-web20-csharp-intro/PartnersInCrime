@@ -25,6 +25,11 @@ namespace Partners_In_Crime.Controllers
 
         public IActionResult Index()
         {
+
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return View();
+            }
             var userId = _userManager.GetUserId(User);
 
             var allUsers = _context.AppUsers.Include(e => e.Interests).Include(e => e.Hobbies).Include(e => e.UserImg).Where(u => u.Id != userId);
@@ -56,7 +61,7 @@ namespace Partners_In_Crime.Controllers
             //TEST KOD SLUT
 
             viewModel.SearchResult = new SearchResultViewModel { Users = searchResult };
-
+            
             return View(viewModel);
         }
 
