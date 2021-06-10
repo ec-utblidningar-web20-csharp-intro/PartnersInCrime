@@ -59,15 +59,15 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             var user = await _context.AppUsers.Where(u => u.Id == userId).Include(i => i.UserImg).FirstOrDefaultAsync();
             if (user.UserImg != null && user.UserImg.Url != "/img/DefaultProfilePic.jpg")
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", user.UserImg.Url);
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", user.UserImg.Url);
                 System.IO.File.Delete(file);
             }
-            file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", image.FileName);
+            file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", image.FileName);
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
-            var img = new UserImg { Url = image.FileName };
+            var img = new UserImg { Url ="/img/" + image.FileName };
             _context.UserImgs.Add(img);
             
             
