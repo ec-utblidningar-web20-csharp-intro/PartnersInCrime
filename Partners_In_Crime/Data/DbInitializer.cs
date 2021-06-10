@@ -53,7 +53,7 @@ namespace Partners_In_Crime.Data
                 context.Hobbies.Add(hobby);
             }
 
-            var img = new UserImg { Url = "/img/DefaultProfilePic.jpg" };
+            var img = new UserImg { Url = "/DefaultProfilePic.jpg" };
             context.UserImgs.Add(img);
             context.SaveChanges();
 
