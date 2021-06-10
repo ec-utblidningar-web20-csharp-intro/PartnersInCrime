@@ -1,0 +1,16 @@
+﻿@page
+@model ProfilePictureModel
+@{
+    ViewData["Title"] = "Profile Picture";
+    ViewData["ActivePage"] = ManageNavPages.ProfilePicture;
+}
+<p>Cool osv.</p>
+
+<div>
+    <img src="/img/@Model.thisUser.UserImg.Url"/>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    Choose File: <input id="File" type="file" asp-for="image" name="image" />
+    <input id="submit" type="submit" value="submit" />
+</form>
