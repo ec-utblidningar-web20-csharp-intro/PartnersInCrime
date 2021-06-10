@@ -14,7 +14,6 @@ namespace Partners_In_Crime.Data
     {
 
         private const string mockUserDataFilePath = "./Data/MockData/MockUsers.json";
-        private static ApplicationDbContext context;
         private static Random omegaRandom = new Random();
         public async static Task LidlSeed(ApplicationDbContext context)
         {

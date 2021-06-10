@@ -50,6 +50,8 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "City")]
             public string City { get; set; }
+
+
         }
 
         private async Task LoadAsync(AppUser user)
@@ -125,5 +127,7 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
+       // public async Task<ActionResult> Update
     }
 }
