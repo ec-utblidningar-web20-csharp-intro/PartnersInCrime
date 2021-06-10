@@ -24,7 +24,7 @@ namespace Partners_In_Crime.Controllers
         }
         public IActionResult Index(string id)
         {
-            var targetUser = _context.AppUsers.Include(u => u.UserImg).Where(u => u.Id == id).FirstOrDefault();
+            var targetUser = _context.AppUsers.Include(u => u.UserImg).Include(u => u.Interests).Include(u => u.Hobbies).Where(u => u.Id == id).FirstOrDefault();
 
             var viewModel = new ProfileViewModel { AppUser = targetUser };
             return View(viewModel);

@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Partners_In_Crime.Data;
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
+@inject ApplicationDbContext Context
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +68,10 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <a href="/Identity/Account/Logout" class="btn btn-outline-primary">Logout</a>
-                        <a href="/identity/account/manage/index">Profile</a>
+
+                        var currentUserId = UserManager.GetUserId(User);
+
+                        <a asp-controller="Profile" asp-action="Index" asp-route-id="@currentUserId">My Profile</a>
                     }
                     else
                     {

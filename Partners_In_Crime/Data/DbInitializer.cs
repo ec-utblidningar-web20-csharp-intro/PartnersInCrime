@@ -66,7 +66,7 @@ namespace Partners_In_Crime.Data
                 City = "Jinghai",
                 Country = "China",
                 Age = 23,
-                Description = "HEJ",
+                Description = "HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej ",
                 UserImg = img,
                 Hobbies = new List<Hobby> { new Hobby { Name = hobbies[1].Name }, new Hobby { Name = hobbies[2].Name }, new Hobby { Name = hobbies[3].Name } },
                 Interests = new List<Interest> { new Interest { Name = interests[1].Name }, new Interest { Name = interests[2].Name }, new Interest { Name = interests[3].Name } }
