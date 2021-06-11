@@ -60,29 +60,25 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
             var defaultImgs = _context.UserImgs.Where(u => u.Id <= 5 && u.Id >= 1).ToList();
 
-            if (user.UserImg != null && !defaultImgs.Contains(user.UserImg))
+            if (defaultImgs.Any(i=>i.Name==image.FileName))
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", user.UserImg.Url);
-                System.IO.File.Delete(file);
+                user.UserImg = defaultImgs.Where(i=>i.Name==image.FileName).FirstOrDefault();
+                _context.SaveChanges();
+                return Page();
             }
-            if ("/img/" + image.FileName == defaultImgs[0].Url || image.FileName == defaultImgs[1].Url || image.FileName == defaultImgs[2].Url || image.FileName == defaultImgs[3].Url || image.FileName == defaultImgs[4].Url)
-            {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img/", image.FileName);
-            }
-            else
-            {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img/", image.FileName);
-            }
+
+            file = BuildUrl(user.UserImg);
+            System.IO.File.Delete(file);
+            file = BuildUrl(image.FileName);
+
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
-            var img = new UserImg { Url = "/img/"+image.FileName};
-            _context.UserImgs.Add(img);
-            
-            
+            var imgName = new UserImg { Name = image.FileName};
+            _context.UserImgs.Add(imgName);
             thisUser = user;
-            user.UserImg = img;
+            user.UserImg = imgName;
             _context.SaveChanges();
             return Page();
         }
@@ -104,6 +100,16 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             _context.SaveChanges();
 
             return Page();
+        }
+        public string BuildUrl(UserImg img)
+        {
+            var url = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", img.Name);
+            return url;
+        }
+        public string BuildUrl(string fileName)
+        {
+            var url = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", fileName);
+            return url;
         }
     }
 }

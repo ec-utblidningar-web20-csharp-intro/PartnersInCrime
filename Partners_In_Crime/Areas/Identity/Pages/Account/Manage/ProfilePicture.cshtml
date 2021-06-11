@@ -24,7 +24,7 @@
 
 <h5>Your Profile Picture</h5>
 <div>
-    <img src="@Model.thisUser.UserImg.Url" style="max-width: 250px; max-height: auto;" />
+    <img src="@Model.thisUser.UserImg.Name" style="max-width: 250px; max-height: auto;" />
 </div>
 
 <h5>Choose profile picture</h5>
@@ -36,7 +36,7 @@
         <div class="button">
             <input type="radio" asp-for="ProfilePic" name ="profilepic" value="@img.Id" id="@img.Id" />
             <label for="@img.Id">
-                <img src="@img.Url" style="max-width: 50px; max-height: auto;"/>
+                <img src="@Model.BuildUrl(img)" style="max-width: 50px; max-height: auto;"/>
             </label>
         </div>
             @*<a href="#@img.Url" class="default-img" style="max-width: 130px; max-height: auto;">
