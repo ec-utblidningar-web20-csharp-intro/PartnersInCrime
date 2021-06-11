@@ -16,8 +16,17 @@
         display: inline-block;
         background: black;
     }
+
+    #userContainer {
+        background: black;
+        color: white;
+    }
 </style>
 @{List<AppUser> listan = Model.MatchedUsers.ToList(); }
+<div id="userContainer">
+
+</div>
+
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -26,31 +35,31 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
 
-            <div id="userCards" class="card">
+            <div id="userCards-0.1" class="card">
                 <img src="@listan[0].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[0].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-1.1" class="card">
                 <img src="@listan[1].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[1].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-2.1" class="card">
                 <img src="@listan[2].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[2].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-3.1" class="card">
                 <img src="@listan[3].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[3].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-4.1" class="card">
                 <img src="@listan[4].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[4].FirstName</h3>
@@ -60,31 +69,31 @@
         </div>
         <div class="carousel-item">
 
-            <div id="userCards" class="card">
+            <div id="userCards-5.1" class="card">
                 <img src="@listan[5].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[5].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-6.1" class="card">
                 <img src="@listan[6].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[6].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-7.1" class="card">
                 <img src="@listan[7].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[7].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-8.1" class="card">
                 <img src="@listan[8].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[8].FirstName</h3>
                 </div>
             </div>
-            <div id="userCards" class="card">
+            <div id="userCards-9.1" class="card">
                 <img src="@listan[9].UserImg.Url" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h3>@listan[9].FirstName</h3>
@@ -102,4 +111,174 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
+<script>
+    // user info on click
+
+    var usercontainer = document.getElementById("userContainer");
+
+    var userInfo01 = userinfo01(`
+        <section>
+          <div class="card">
+             <img src="@listan[0].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[0].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo11 = userinfo11(`
+        <section>
+          <div class="card">
+             <img src="@listan[1].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[1].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo21 = userinfo21(`
+        <section>
+          <div class="card">
+             <img src="@listan[2].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[2].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo31 = userinfo31(`
+        <section>
+          <div class="card">
+             <img src="@listan[3].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[3].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo41 = userinfo41(`
+        <section>
+          <div class="card">
+             <img src="@listan[4].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[4].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo51 = userinfo51(`
+        <section>
+          <div class="card">
+             <img src="@listan[5].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[5].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo61 = userinfo61(`
+        <section>
+          <div class="card">
+             <img src="@listan[6].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[6].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo71 = userinfo71(`
+        <section>
+          <div class="card">
+             <img src="@listan[7].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[7].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo81 = userinfo81(`
+        <section>
+          <div class="card">
+             <img src="@listan[8].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[8].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+    var userInfo91 = userinfo91(`
+        <section>
+          <div class="card">
+             <img src="@listan[9].UserImg.Url" class="card-img-top" />
+             <div class="card-body">
+                <h2>@listan[9].FirstName</h2>
+            </div>
+        </div>
+        </section>
+        `);
+
+    document.getElementById("userCards-0.1").onclick = function (e) {
+        usercontainer.append(userInfo01);
+    };
+    document.getElementById("userCards-1.1").onclick = function (e) {
+        usercontainer.append(userInfo11);
+    };
+    document.getElementById("userCards-2.1").onclick = function (e) {
+        usercontainer.append(userInfo21);
+    };
+    document.getElementById("userCards-3.1").onclick = function (e) {
+        usercontainer.append(userInfo31);
+    };
+    document.getElementById("userCards-4.1").onclick = function (e) {
+        usercontainer.append(userInfo41);
+    };
+    document.getElementById("userCards-5.1").onclick = function (e) {
+        usercontainer.append(userInfo51);
+    };
+    document.getElementById("userCards-6.1").onclick = function (e) {
+        usercontainer.append(userInfo61);
+    };
+    document.getElementById("userCards-7.1").onclick = function (e) {
+        usercontainer.append(userInfo71);
+    };
+    document.getElementById("userCards-8.1").onclick = function (e) {
+        usercontainer.append(userInfo81);
+    };
+    document.getElementById("userCards-9.1").onclick = function (e) {
+        usercontainer.append(userInfo91);
+    };
+
+    function userinfo01(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo11(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo21(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo31(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo41(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo51(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo61(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo71(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo81(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+    function userinfo91(strHTML) {
+        return document.createRange().createContextualFragment(strHTML);
+    }
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
