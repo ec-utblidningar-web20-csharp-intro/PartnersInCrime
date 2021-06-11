@@ -22,6 +22,7 @@ namespace Partners_In_Crime.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         public IActionResult Index(string id)
         {
             var targetUser = _context.AppUsers.Include(u => u.UserImg).Include(u => u.Interests).Include(u => u.Hobbies).Where(u => u.Id == id).FirstOrDefault();
