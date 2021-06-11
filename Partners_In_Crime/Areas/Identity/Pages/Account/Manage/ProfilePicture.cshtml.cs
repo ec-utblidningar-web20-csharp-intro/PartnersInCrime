@@ -52,34 +52,33 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostUploadAsync()
         {
             var file="";
             var userId = _userManager.GetUserId(User);
             var user = await _context.AppUsers.Where(u => u.Id == userId).Include(i => i.UserImg).FirstOrDefaultAsync();
-            if (user.UserImg != null && user.UserImg.Url != "/img/DefaultProfilePic.jpg")
+
+            var defaultImgs = _context.UserImgs.Where(u => u.Id <= 5 && u.Id >= 1).ToList();
+
+            if (defaultImgs.Any(i=>i.Name==image.FileName))
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", user.UserImg.Url);
-                System.IO.File.Delete(file);
+                user.UserImg = defaultImgs.Where(i=>i.Name==image.FileName).FirstOrDefault();
+                _context.SaveChanges();
+                return Page();
             }
-            if (user.UserImg.Url == "/img/DefaultProfilePic.jpg")
-            {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", image.FileName);
-            }
-            else
-            {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", image.FileName);
-            }
+
+            file = BuildUrl(user.UserImg);
+            System.IO.File.Delete(file);
+            file = BuildUrl(image.FileName);
+
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
-            var img = new UserImg { Url = "/img/"+image.FileName};
-            _context.UserImgs.Add(img);
-            
-            
+            var imgName = new UserImg { Name = image.FileName};
+            _context.UserImgs.Add(imgName);
             thisUser = user;
-            user.UserImg = img;
+            user.UserImg = imgName;
             _context.SaveChanges();
             return Page();
         }
@@ -101,6 +100,16 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             _context.SaveChanges();
 
             return Page();
+        }
+        public string BuildUrl(UserImg img)
+        {
+            var url = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", img.Name);
+            return url;
+        }
+        public string BuildUrl(string fileName)
+        {
+            var url = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", fileName);
+            return url;
         }
     }
 }

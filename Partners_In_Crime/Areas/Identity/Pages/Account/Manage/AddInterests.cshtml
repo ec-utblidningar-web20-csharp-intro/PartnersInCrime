@@ -1,0 +1,33 @@
+﻿@page
+@model Partners_In_Crime.Areas.Identity.Pages.Account.Manage.AddInterestsModel
+@{
+    <h1>Hobbies</h1>
+    
+    <form method="post">
+        <div class="flex-row">
+            <ul>
+                @foreach (var interest in Model.Interests)
+                {
+                <li>
+                    <input type="checkbox" value="@interest" id="@interest.ID" />
+                    <label for="@interest.ID">
+                        @interest.Name
+                    </label>
+                </li>
+                }
+            </ul>
+            <ul>
+                @foreach (var hobby in Model.Hobbies)
+                {
+                <li>
+                    <input type="checkbox" value="@hobby" id="@hobby.ID" />
+                    <label for="@hobby.ID">
+                        @hobby.Name
+                    </label>
+                </li>
+                }
+            </ul>
+        </div>
+        <input type="submit" value="submit"/>
+    </form>
+}
