@@ -24,7 +24,7 @@
 
 <h5>Your Profile Picture</h5>
 <div>
-    <img src="/img/@Model.thisUser.UserImg.Url" style="max-width: 250px; max-height: auto;" />
+    <img src="@Model.thisUser.UserImg.Url" style="max-width: 250px; max-height: auto;" />
 </div>
 
 <h5>Choose profile picture</h5>
@@ -36,7 +36,7 @@
         <div class="button">
             <input type="radio" asp-for="ProfilePic" name ="profilepic" value="@img.Id" id="@img.Id" />
             <label for="@img.Id">
-                <img src="/img/@img.Url" style="max-width: 50px; max-height: auto;"/>
+                <img src="@img.Url" style="max-width: 50px; max-height: auto;"/>
             </label>
         </div>
             @*<a href="#@img.Url" class="default-img" style="max-width: 130px; max-height: auto;">
@@ -48,7 +48,7 @@
 </form>
 
 <h5>Upload profile picture</h5>
-<form method="post" enctype="multipart/form-data">
+<form method="post" asp-page-handler="upload" enctype="multipart/form-data">
     Choose File: <input id="File" type="file" asp-for="image" name="image" />
-    <input id="submit" type="submit" value="submit" />
+    <input id="submit2" type="submit" value="submit2" />
 </form>

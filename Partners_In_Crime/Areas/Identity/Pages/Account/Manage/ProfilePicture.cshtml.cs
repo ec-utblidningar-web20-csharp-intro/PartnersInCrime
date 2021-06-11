@@ -52,23 +52,26 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostUploadAsync()
         {
             var file="";
             var userId = _userManager.GetUserId(User);
             var user = await _context.AppUsers.Where(u => u.Id == userId).Include(i => i.UserImg).FirstOrDefaultAsync();
-            if (user.UserImg != null && user.UserImg.Url != "/img/DefaultProfilePic.jpg")
+
+            var defaultImgs = _context.UserImgs.Where(u => u.Id <= 5 && u.Id >= 1).ToList();
+
+            if (user.UserImg != null && !defaultImgs.Contains(user.UserImg))
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", user.UserImg.Url);
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", user.UserImg.Url);
                 System.IO.File.Delete(file);
             }
-            if (user.UserImg.Url == "/img/DefaultProfilePic.jpg")
+            if ("/img/" + image.FileName == defaultImgs[0].Url || image.FileName == defaultImgs[1].Url || image.FileName == defaultImgs[2].Url || image.FileName == defaultImgs[3].Url || image.FileName == defaultImgs[4].Url)
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", image.FileName);
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img/", image.FileName);
             }
             else
             {
-                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", image.FileName);
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img/", image.FileName);
             }
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
