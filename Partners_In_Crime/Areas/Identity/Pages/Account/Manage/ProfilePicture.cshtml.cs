@@ -62,12 +62,19 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
                 file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", user.UserImg.Url);
                 System.IO.File.Delete(file);
             }
-            file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", image.FileName);
+            if (user.UserImg.Url == "/img/DefaultProfilePic.jpg")
+            {
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot", image.FileName);
+            }
+            else
+            {
+                file = Path.Combine(_enviroment.ContentRootPath, "wwwroot/img", image.FileName);
+            }
             using (var fileStream = new FileStream(file, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
-            var img = new UserImg { Url = image.FileName };
+            var img = new UserImg { Url = "/img/"+image.FileName};
             _context.UserImgs.Add(img);
             
             
