@@ -53,19 +53,19 @@ namespace Partners_In_Crime.Data
                 context.Hobbies.Add(hobby);
             }
           
-            var pp1 = new UserImg { Name = "DefaultProfilePic.jpg" };
+            var pp1 = new UserImg { Name = "/img/DefaultProfilePic.jpg" };
             context.UserImgs.Add(pp1);
 
-            var pp2 = new UserImg { Name = "pp2.jpg" };
+            var pp2 = new UserImg { Name = "/img/pp2.jpg" };
             context.UserImgs.Add(pp2);
 
-            var pp3 = new UserImg { Name = "pp3.jpg" };
+            var pp3 = new UserImg { Name = "/img/pp3.jpg" };
             context.UserImgs.Add(pp3);
 
-            var pp4 = new UserImg { Name = "pp4.jpg" };
+            var pp4 = new UserImg { Name = "/img/pp4.jpg" };
             context.UserImgs.Add(pp4);
 
-            var pp5 = new UserImg { Name = "pp5.jpg" };
+            var pp5 = new UserImg { Name = "/img/pp5.jpg" };
             context.UserImgs.Add(pp5);
 
             context.SaveChanges();

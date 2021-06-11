@@ -36,7 +36,7 @@
         <div class="button">
             <input type="radio" asp-for="ProfilePic" name ="profilepic" value="@img.Id" id="@img.Id" />
             <label for="@img.Id">
-                <img src="@Model.BuildUrl(img)" style="max-width: 50px; max-height: auto;"/>
+                <img src="@Model.BuildUrl(img.Name)" style="max-width: 50px; max-height: auto;"/>
             </label>
         </div>
             @*<a href="#@img.Url" class="default-img" style="max-width: 130px; max-height: auto;">

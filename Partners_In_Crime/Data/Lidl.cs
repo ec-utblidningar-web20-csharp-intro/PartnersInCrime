@@ -22,11 +22,13 @@ namespace Partners_In_Crime.Data
             List<Interest> interests = await context.Interests.ToListAsync();
             List<Hobby> hobbies = await context.Hobbies.ToListAsync();
 
-            var img = context.UserImgs.Find(1);
+            var imgs = context.UserImgs.ToList();
+
+            var rnd = new Random();
 
             foreach (var user in users)
             {
-                user.UserImg = img;
+                user.UserImg = imgs[rnd.Next(0, 4)];
                 user.UserName = user.Email;
                 user.Interests = new List<Interest>();
                 user.Hobbies = new List<Hobby>();
