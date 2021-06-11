@@ -1,80 +1,91 @@
 ﻿@model ProfileViewModel
+@using Microsoft.AspNetCore.Identity
+@using Partners_In_Crime.Data;
+@inject UserManager<AppUser> UserManager
+@inject ApplicationDbContext Context
 
-@{ 
+@{
     var user = Model.AppUser;
+    var userId = UserManager.GetUserId(User);
+    var loggedInUser = Context.Users.Find(userId);
 }
 
 <h1>@user.FirstName @user.LastName's Profile</h1>
-<a style="margin: 5% 0 5% 0;" asp-area="Identity" asp-page="/Account/Manage/Index">Edit Profile</a>
-    <div class="container h-auto">
-        <div class="row">
-            <div class="col-4">
-                <img src="@user.UserImg.Name" style="border-radius: 180px 180px; max-width: 100%; height: auto;" alt="...">
-            </div>
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="thead-dark">About Me</h3>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-sm-3">Name</dt>
-                            <dd class="col-sm-9">@user.FirstName @user.LastName</dd>
+@{
+    if (user == loggedInUser)
+    {
+        <a style="margin: 5% 0 5% 0;" asp-area="Identity" asp-page="/Account/Manage/Index">Edit Profile</a>
+    }
+}
+<div class="container h-auto">
+    <div class="row">
+        <div class="col-4">
+            <img src="@user.UserImg.Name" style="border-radius: 180px 180px; max-width: 100%; height: auto;" alt="...">
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="thead-dark">About Me</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Name</dt>
+                        <dd class="col-sm-9">@user.FirstName @user.LastName</dd>
 
-                            <dt class="col-sm-3">Age</dt>
-                            <dd class="col-sm-9">@user.Age</dd>
+                        <dt class="col-sm-3">Age</dt>
+                        <dd class="col-sm-9">@user.Age</dd>
 
-                            <dt class="col-sm-3">Country</dt>
-                            <dd class="col-sm-9">@user.Country</dd>
+                        <dt class="col-sm-3">Country</dt>
+                        <dd class="col-sm-9">@user.Country</dd>
 
-                            <dt class="col-sm-3">City</dt>
-                            <dd class="col-sm-9">@user.City</dd>
+                        <dt class="col-sm-3">City</dt>
+                        <dd class="col-sm-9">@user.City</dd>
 
-                            <dt class="col-sm-3">Email</dt>
-                            <dd class="col-sm-9">@user.Email</dd>
+                        <dt class="col-sm-3">Email</dt>
+                        <dd class="col-sm-9">@user.Email</dd>
 
-                            <dt class="col-sm-3">Description</dt>
-                            <dd class="col-sm-9">@user.Description</dd>
+                        <dt class="col-sm-3">Description</dt>
+                        <dd class="col-sm-9">@user.Description</dd>
 
-                            <dt class="col-sm-3">Contact</dt>
-                            <dd class="col-sm-9"><button type="button" style="max-width: 200px" class="btn btn-secondary">Add Friend</button></dd>
-                        </dl>
-                    </div>
+                        <dt class="col-sm-3">Contact</dt>
+                        <dd class="col-sm-9"><button type="button" style="max-width: 200px" class="btn btn-secondary">Add Friend</button></dd>
+                    </dl>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 
-    <div class="card-group" style="margin: 3% 15% 15% 15%">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="thead-dark">Hobbies</h3>
-            </div>
-            <div class="card-body">
-                <ul>
-                    @{
-                        foreach (var hobby in user.Hobbies)
-                        {
-                            <li class="card-text">@hobby.Name</li>
-                        }
-                    }
-                </ul>
-            </div>
+<div class="card-group" style="margin: 3% 15% 15% 15%">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="thead-dark">Hobbies</h3>
         </div>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="thead-dark">Interests</h3>
-            </div>
-            <div class="card-body">
-                <ul>
-                    @{
-                        foreach (var interest in user.Interests)
-                        {
-                            <li class="card-text">@interest.Name</li>
-                        }
+        <div class="card-body">
+            <ul>
+                @{
+                    foreach (var hobby in user.Hobbies)
+                    {
+                        <li class="card-text">@hobby.Name</li>
                     }
-                </ul>
-            </div>
+                }
+            </ul>
         </div>
     </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="thead-dark">Interests</h3>
+        </div>
+        <div class="card-body">
+            <ul>
+                @{
+                    foreach (var interest in user.Interests)
+                    {
+                        <li class="card-text">@interest.Name</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
