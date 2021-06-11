@@ -1,15 +1,53 @@
 ﻿@page
 @model ProfilePictureModel
+@using Partners_In_Crime.Data;
+@inject ApplicationDbContext Context;
 @{
     ViewData["Title"] = "Profile Picture";
     ViewData["ActivePage"] = ManageNavPages.ProfilePicture;
 }
-<p>Cool osv.</p>
+<style>
+    .button input[type="radio"] {
+        display: none;
+    }
 
+    input[type="radio"]:checked + label {
+        border: 1px solid red;
+    }
+</style>
+
+<p>Cool osv.</p>
+@{
+    var defaultProfilePics = Context.UserImgs.Where(u => u.Id == 1 || u.Id == 2 || u.Id == 3 || u.Id == 4 || u.Id == 5).ToList();
+}
+
+
+<h5>Your Profile Picture</h5>
 <div>
-    <img src="/img/@Model.thisUser.UserImg.Url"/>
+    <img src="/img/@Model.thisUser.UserImg.Url" style="max-width: 250px; max-height: auto;" />
 </div>
 
+<h5>Choose profile picture</h5>
+<form asp-page-handler="default" method="post">
+    <div>
+        @foreach (var img in defaultProfilePics)
+        {
+            
+        <div class="button">
+            <input type="radio" asp-for="ProfilePic" name ="profilepic" value="@img.Id" id="@img.Id" />
+            <label for="@img.Id">
+                <img src="/img/@img.Url" style="max-width: 50px; max-height: auto;"/>
+            </label>
+        </div>
+            @*<a href="#@img.Url" class="default-img" style="max-width: 130px; max-height: auto;">
+                <img src="/img/@img.Url" style="max-width: 130px; max-height: auto; cursor: pointer;" />
+            </a>*@
+        }
+        <input id="submit" type="submit" value="submit" />
+    </div>
+</form>
+
+<h5>Upload profile picture</h5>
 <form method="post" enctype="multipart/form-data">
     Choose File: <input id="File" type="file" asp-for="image" name="image" />
     <input id="submit" type="submit" value="submit" />

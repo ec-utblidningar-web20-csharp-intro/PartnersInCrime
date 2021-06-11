@@ -53,9 +53,26 @@ namespace Partners_In_Crime.Data
                 context.Hobbies.Add(hobby);
             }
 
-            var img = new UserImg { Url = "/DefaultProfilePic.jpg" };
-            context.UserImgs.Add(img);
+            var pp1 = new UserImg { Url = "/DefaultProfilePic.jpg" };
+            context.UserImgs.Add(pp1);
+
+            var pp2 = new UserImg { Url = "/pp2.jpg" };
+            context.UserImgs.Add(pp2);
+
+            var pp3 = new UserImg { Url = "/pp3.jpg" };
+            context.UserImgs.Add(pp3);
+
+            var pp4 = new UserImg { Url = "/pp4.jpg" };
+            context.UserImgs.Add(pp4);
+
+            var pp5 = new UserImg { Url = "/pp5.jpg" };
+            context.UserImgs.Add(pp5);
+
             context.SaveChanges();
+
+            var imgs = context.UserImgs.ToList();
+
+            var rnd = new Random();
 
             var testUser = new AppUser
             {
@@ -67,7 +84,7 @@ namespace Partners_In_Crime.Data
                 Country = "China",
                 Age = 23,
                 Description = "HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej HEJ hej ",
-                UserImg = img,
+                UserImg = imgs[rnd.Next(0,4)],
                 Hobbies = new List<Hobby> { new Hobby { Name = hobbies[1].Name }, new Hobby { Name = hobbies[2].Name }, new Hobby { Name = hobbies[3].Name } },
                 Interests = new List<Interest> { new Interest { Name = interests[1].Name }, new Interest { Name = interests[2].Name }, new Interest { Name = interests[3].Name } }
             };

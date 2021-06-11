@@ -4,7 +4,8 @@
     var user = Model.AppUser;
 }
 
-<h1 style="margin: 5% 0 5% 0;">@user.UserName's Profile</h1>
+<h1>@user.FirstName @user.LastName's Profile</h1>
+<a style="margin: 5% 0 5% 0;" asp-area="Identity" asp-page="/Account/Manage/Index">Edit Profile</a>
     <div class="container h-auto">
         <div class="row">
             <div class="col-4">

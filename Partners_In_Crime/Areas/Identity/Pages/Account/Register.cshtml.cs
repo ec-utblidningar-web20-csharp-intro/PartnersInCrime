@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -92,7 +93,19 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account
             {
                 var user = new AppUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName};
 
-                var profilePic = _context.UserImgs.FirstOrDefault();
+                var imgs = _context.UserImgs.ToList();
+
+                var defaultImgs = new List<UserImg>();
+
+                for (int i = 1; i < 6; i++)
+                {
+                    var img = imgs.Where(u => u.Id == i).FirstOrDefault();
+                    defaultImgs.Add(img);
+                }
+
+                var rnd = new Random();
+                var rndNumber = rnd.Next(1, 5);
+                var profilePic = _context.UserImgs.Where(u => u.Id == rndNumber).FirstOrDefault();
                 user.UserImg = profilePic;
 
                 _context.SaveChanges();
