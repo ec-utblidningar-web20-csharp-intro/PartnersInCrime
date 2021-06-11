@@ -36,9 +36,9 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
 
         }
 
-        public UserImg userPicture { get; set; }
         public AppUser thisUser { get; set; }
         public IFormFile image { get; set; }
+        public UserImg ProfilePic { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -81,6 +81,25 @@ namespace Partners_In_Crime.Areas.Identity.Pages.Account.Manage
             thisUser = user;
             user.UserImg = img;
             _context.SaveChanges();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDefaultAsync()
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.AppUsers.Where(u => u.Id == userId).Include(i => i.UserImg).FirstOrDefaultAsync();
+
+            var imgId = Request.Form["profilepic"];
+
+            var pp = _context.UserImgs.Where(u => u.Id == int.Parse(imgId)).FirstOrDefault();
+
+            user.UserImg = pp;
+
+            //var img = _context.UserImgs.Where(u => u.Id == defaultPicId).FirstOrDefault();
+
+            thisUser = user;
+            _context.SaveChanges();
+
             return Page();
         }
     }
